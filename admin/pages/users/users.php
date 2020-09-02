@@ -5,6 +5,9 @@
 <?php
   $qry_get_all_users = "SELECT u.*, ur.role_name FROM users AS u, user_roles AS ur WHERE ur.id = u.user_role";
   $rs_get_all_users = $conn->query($qry_get_all_users);
+
+  $qry_get_all_roles = "SELECT * FROM user_roles";
+  $rs_get_all_roles = $conn->query($qry_get_all_roles);
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -102,122 +105,82 @@
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newUserModalLabel"><i class="fa fa-plus"></i> New User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <p class="modal-title" id="newUserModalLabel"><i class="fa fa-plus"></i> Add New User</p>
       </div>
-      <div class="modal-body">
-        <form>
-          <nav>
-            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab"
-                aria-controls="nav-home" aria-selected="true"><i class="fa fa-info"></i> Info</a>
-              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                aria-controls="nav-profile" aria-selected="false"><i class="fa fa-user"></i> Profile</a>
-              <a class="nav-item nav-link" id="nav-permissions-tab" data-toggle="tab" href="#nav-permissions" role="tab"
-                aria-controls="nav-contact" aria-selected="false"><i class="fa fa-lock"></i> Permissions</a>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
-              <div class="form-group row">
-                <label for="newUserName" class="col-sm-4 col-form-label">Username</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="newUserName" placeholder="Username">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserPassword" class="col-sm-4 col-form-label">Password</label>
-                <div class="col-sm-8">
-                  <input type="password" class="form-control" id="newUserPassword" placeholder="Password">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserEmail" class="col-sm-4 col-form-label">Email</label>
-                <div class="col-sm-8">
-                  <input type="email" class="form-control" id="newUserEmail" placeholder="Email">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserStatus" class="col-sm-4 col-form-label">Status</label>
-                <div class="col-sm-8">
-                  <select id="newUserStatus" class="form-control">
-                    <option value="1" selected>Active</option>
-                    <option value="2">Inactive</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserGroup" class="col-sm-4 col-form-label">User Group</label>
-                <div class="col-sm-8">
-                  <select id="newUserGroup" class="form-control">
-                    <option selected>Select Here</option>
-                    <option></option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-              <div class="form-group row">
-                <label for="newUserFullName" class="col-sm-4 col-form-label">Full Name</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="newUserFullName" placeholder="Full Name">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserPhoto" class="col-sm-4 col-form-label">Photo</label>
-                <div class="col-sm-8">
-                  <label role="button">
-                    <img id="nuser_photo_src" class="image-form-control"
-                      src="<?=BASE_URL?>media/img/users/default-user.png"
-                      def-src="<?=BASE_URL?>media/img/users/default-user.png">
-                    <input class="hidden" bind-urp="#nuser_photo_src" type="file" accept="image/*" name="photo">
-                  </label>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserPhone" class="col-sm-4 col-form-label">Phone</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="newUserPhone" placeholder="Phone Number">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserCountry" class="col-sm-4 col-form-label">Country</label>
-                <div class="col-sm-8">
-                  <select id="newUserCountry" class="form-control">
-                    <option selected>Select Here</option>
-                    <option></option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserCity" class="col-sm-4 col-form-label">City</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="newUserCity" placeholder="City">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserAddress" class="col-sm-4 col-form-label">Address</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="newUserAddress" placeholder="Address">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="newUserZip" class="col-sm-4 col-form-label">Zip</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="newUserZip" placeholder="Zip Code">
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="nav-permissions" role="tabpanel" aria-labelledby="nav-permissions-tab">...
+      <form action="" method="" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="username" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Username</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="username" id="username" value="" class="form-control uniqueCheck" data-check="1" type="text"
+                placeholder="Username" required aria-required="true">
             </div>
           </div>
-        </form>
-      </div>
+          <div class="form-group row">
+            <label for="fullName" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Full Name</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="fullName" id="fullName" value="" class="form-control" data-check="1" type="text"
+                placeholder="Full Name" required aria-required="true">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Email</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="email" id="email" value="" class="form-control" data-check="1" type="email"
+                placeholder="Email" required aria-required="true">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="phone" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Phone</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="phone" id="phone" value="" class="form-control" data-check="1" type="text"
+                placeholder="Phone Number" required aria-required="true">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Password</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="password" id="password" value="" class="form-control" data-check="1" type="password"
+                placeholder="Password" required aria-required="true">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="status" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Status</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <select name="status" id="status" class="form-control">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="role" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Role</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <select name="role" id="role" class="form-control">
+                <?php
+                foreach($rs_get_all_roles as $role)
+                { ?>
+                <option value="<?=$role['id']?>"><?=$role['role_name']?></option>
+                <?php
+                } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="image" class="col-md-3 col-sm-3 col-xs-12 control-label label-required">Image</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="image" id="image" value="" class="form-control uniqueCheck" data-check="1" type="file"
+                required="" aria-required="true">
+            </div>
+          </div>
+        </div>
+      </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success">Create User</button>
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Create</button>
       </div>
     </div>
   </div>
