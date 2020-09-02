@@ -3,8 +3,8 @@
 <?php include '../../layout/left-sidebar.php'; ?>
 <?php include('../../conf/dbConfig.php'); ?>
 <?php
-  $qry_get_all_users = "SELECT u.*, ur.role_name FROM users AS u, user_roles AS ur WHERE ur.id = u.user_role";
-  $rs_get_all_users = $conn->query($qry_get_all_users);
+  $qry_get_all_customers = "SELECT * FROM customers";
+  $rs_get_all_customers = $conn->query($qry_get_all_customers);
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -13,7 +13,7 @@
     <h1><i class="fa fa-caret-right"></i> Users</h1>
     <ol class="breadcrumb">
       <li class="active"><a href="<?=BASE_URL?>"><i class="fa fa-home"></i> Home</a></li>
-      <li>Users</li>
+      <li>Customers</li>
     </ol>
   </section>
   <!-- /.content-header -->
@@ -24,8 +24,8 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Data Table With Full Features</h3>
-            <button id="btn-new-user" class="btn btn-success pull-right"><i class="fa fa-plus"></i> New User</button>
+            <h3 class="box-title">Customer List</h3>
+            <button id="btn-new-customer" class="btn btn-success pull-right"><i class="fa fa-plus"></i> New Customer</button>
           </div><!-- /.box-header -->
           <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
@@ -34,7 +34,6 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Username</th>
-                  <th>Role</th>
                   <th>Email</th>
                   <th>Phone Number</th>
                   <th>Status</th>
@@ -44,21 +43,20 @@
               </thead>
               <tbody>
                 <?php
-                  foreach ($rs_get_all_users as $user)
+                  foreach ($rs_get_all_customers as $customer)
                   {
                   ?>
                 <tr>
-                  <td><?=$user['id']?></td>
-                  <td><?=$user['user_full_name']?></td>
-                  <td><?=$user['user_username']?></td>
-                  <td><?=$user['role_name']?></td>
-                  <td><?=$user['user_email']?></td>
-                  <td><?=$user['user_phone']?></td>
+                  <td><?=$customer['id']?></td>
+                  <td><?=$customer['customer_full_name']?></td>
+                  <td><?=$customer['customer_username']?></td>
+                  <td><?=$customer['customer_email']?></td>
+                  <td><?=$customer['customer_phone']?></td>
                   <td>
                     <label
-                      class="label <?=($user['user_status']=='Inactive')?'label-danger':'label-success'?>"><?=$user['user_status']?></label>
+                      class="label <?=($customer['customer_status']=='Inactive')?'label-danger':'label-success'?>"><?=$customer['customer_status']?></label>
                   </td>
-                  <td><?=$user['created_at']?></td>
+                  <td><?=$customer['created_at']?></td>
                   <td>
                     <div class=" btn-group">
                       <button class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> View</button>
@@ -76,7 +74,6 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Username</th>
-                  <th>Role</th>
                   <th>Email</th>
                   <th>Phone Number</th>
                   <th>Status</th>
@@ -97,12 +94,12 @@
 <!-- /.content-wrapper -->
 
 <!-- New User Modal -->
-<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel"
+<div class="modal fade" id="newCustomerModal" tabindex="-1" role="dialog" aria-labelledby="newCustomerModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newUserModalLabel"><i class="fa fa-plus"></i> New User</h5>
+        <h5 class="modal-title" id="newCustomerModalLabel"><i class="fa fa-plus"></i> New Customer</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -217,7 +214,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success">Create User</button>
+        <button type="button" class="btn btn-success pull-left">Create User</button>
       </div>
     </div>
   </div>
@@ -228,7 +225,7 @@
 <?php include '../../layout/foot-scripts.php'; ?>
 
 <script>
-  $("#btn-new-user").click(function () {
-    $('#newUserModal').modal('show');
+  $("#btn-new-customer").click(function () {
+    $('#newCustomerModal').modal('show');
   });
 </script>

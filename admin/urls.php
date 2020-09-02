@@ -1,5 +1,6 @@
 <?php
     // define('BASE_URL', 'http://localhost/gms/admin/');
+    define('CLIENT_BASE_URL', 'http://localhost/gsm/');
 
     define('PRODUCTS_URL', BASE_URL.'pages/products.php');
     define('FILES_URL', BASE_URL.'pages/files.php');
@@ -10,6 +11,9 @@
 
     // Users
     define('USERS_URL', BASE_URL.'pages/users/users.php');
+
+    // Customers
+    define('CUSTOMERS_URL', BASE_URL.'pages/customers/customers.php');
 
     // Billing
     define('BILLING_ORDERS_URL', BASE_URL.'pages/billing/billing-orders.php');

@@ -25,10 +25,23 @@
         </a>
       </li>
       <li>
+        <a href="<?=CLIENT_BASE_URL?>">
+          <i class="fa fa-eye"></i> <span>Live Site</span>
+        </a>
+      </li>
+      <li>
         <a href="<?=USERS_URL?>">
           <i class="fa fa-users"></i>
           <span>
             Users
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="<?=CUSTOMERS_URL?>">
+          <i class="fa fa-users"></i>
+          <span>
+            Customers
           </span>
         </a>
       </li>
