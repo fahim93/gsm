@@ -41,6 +41,25 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+  <!-- Section CSS -->
+  <!-- jQuery UI (REQUIRED) -->
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/jquery/jquery-ui-1.12.0.css" type="text/css">
+
+  <!-- elfinder css -->
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/commands.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/common.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/contextmenu.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/cwd.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/dialog.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/fonts.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/navbar.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/places.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/quicklook.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/statusbar.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/toast.css" type="text/css">
+  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/toolbar.css" type="text/css">
 </head>
 
 <body class="skin-blue sidebar-mini">
