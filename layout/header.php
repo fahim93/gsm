@@ -1,5 +1,9 @@
 <?php define('BASE_URL', 'http://localhost/gsm/'); ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/gsm/urls.php'); ?>
+<?php
+$user_type = 'Anonymous';
+$user_id = '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +55,10 @@
 <link rel="stylesheet" href="<?=BASE_URL?>assets/css/font-awesome.min.css">
 
 <link rel="shortcut icon" href="<?=BASE_URL?>uploads/system/fav1582381311.png">
-<script src="<?=BASE_URL?>assets/components/jquery/dist/jquery.min.js"></script>
+<!-- Toastr -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<script src="<?=BASE_URL?>assets/components/jquery/dist/jquery.min.js">
+</script>
 <style>
     #owl-main .owl-wrapper {
         margin-bottom: 0px !important;

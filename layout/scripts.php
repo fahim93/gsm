@@ -16,6 +16,9 @@
 <script src="<?=BASE_URL?>assets/js/jsoft-scripts.js"></script>
 <script src="<?=BASE_URL?>assets/js/jsoft-custom.js"></script>
 
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
+
 
 
 <script>

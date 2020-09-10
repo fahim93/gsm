@@ -2,8 +2,12 @@
 <?php include('layout/navbar.php'); ?>
 <?php include('conf/dbConfig.php'); ?>
 <?php include('functions/fileManager.php'); ?>
+<?php include('functions/custom-functions.php'); ?>
 <?php
 $folder_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
+$original_size = get_daily_downloaded_size_per_user($conn, $ip=getIPAddress(), $user_id=$user_id);
+$max_limit = 6 * 1024 * 1024 * 1024;
+$percentage_of_max_limit = ($original_size * 100) / $max_limit;
 ?>
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -87,14 +91,15 @@ $folder_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
     </div>
     <div class="col-md-8 col-sm-7 col-xs-10">
       <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="0.012652079264323" aria-valuemin="0"
-          aria-valuemax="100" style="width:0.012652079264323%">
-          <span class="sr-only">0.012652079264323%</span>
+        <div class="progress-bar" role="progressbar"
+          aria-valuenow="<?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>" aria-valuemin="0"
+          aria-valuemax="100" style="width:<?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>%">
+          <span class="sr-only"><?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>%</span>
         </div>
       </div>
     </div>
     <div class="col-md-2 col-sm-3 hidden-xs text-left">
-      <span class="font-14">796.0 KB / 6 GB</span>
+      <span class="font-14"><?=size_humanize($original_size)['SAU']?> / 6 GB</span>
     </div>
   </div>
 </div>
@@ -135,19 +140,20 @@ $folder_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
 
     </div>
   </div>
+  <?php
+  $folder_list = get_objects($conn, $table_name='folders', $filter_set=array("is_active"=>"Yes", "parent"=>''));
+  if(isset($folder_list) && $folder_list->num_rows > 0){ ?>
   <div class="downloads-folders pad-t-50 wow fadeInUp">
     <div class="container">
       <div class="downloads-folders-grid-holder">
         <?php
-        $folder_list = get_objects($conn, $table_name='folders', $filter_set=array("is_active"=>"Yes", "parent"=>$folder_id));
-        if(isset($folder_list) && $folder_list->num_rows > 0){
           foreach($folder_list as $folder){ ?>
-        <a href="<?=BASE_URL.'?fid='.$folder['id']?>">
+        <a href="<?=FOLDER_URL.$folder['id']?>">
           <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
             <div class="folder-home-item">
 
               <div class="image">
-                <a href="<?=BASE_URL.'?fid='.$folder['id']?>">
+                <a href="<?=FOLDER_URL.$folder['id']?>">
                   <img
                     src="<?=(isset($folder['thumbnail']) && $folder['thumbnail'] != '') ? DEFAULT_FOLDER_ICON_PATH . $folder['thumbnail'] : DEFAULT_FOLDER_ICON_SRC ?>"
                     class="img-responsive">
@@ -155,19 +161,20 @@ $folder_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
               </div>
               <div class="body">
                 <div class="title">
-                  <a href="<?=BASE_URL.'?fid='.$folder['id']?>"><?=$folder['title']?></a>
+                  <a href="<?=FOLDER_URL.$folder['id']?>"><?=$folder['title']?></a>
                 </div>
                 <p class="description"><?=$folder['description']?></p>
               </div>
             </div>
           </div>
         </a>
-        <?php }
-        }
-        ?>
+        <?php } ?>
       </div>
     </div>
   </div>
+  <?php
+  }
+  ?>
   <div class="downloads-files pad-t-50 wow fadeInUp">
     <div class="container">
       <div class="downloads-files-grid-holder">

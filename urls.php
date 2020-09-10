@@ -14,7 +14,11 @@ define('ANNOUNCEMENT_URL', BASE_URL.'pages/announcements.php');
 define('CONTACT_US_URL', BASE_URL.'pages/contact-us.php');
 
 // Files
-define('FILE_DETAILS_URL', BASE_URL.'pages/files/file-details.php?fid=');
+define('FILE_DETAILS_URL', BASE_URL.'pages/file-details/?fid=');
+define('FILE_PATH', BASE_URL.'admin/files/');
+
+// Folder
+define('FOLDER_URL', BASE_URL.'pages/folders/?fid=');
 
 
 

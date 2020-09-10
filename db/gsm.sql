@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2020 at 11:14 PM
+-- Generation Time: Sep 11, 2020 at 01:37 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -48,6 +48,34 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `customer_full_name`, `customer_username`, `customer_email`, `customer_phone`, `customer_country`, `customer_city`, `customer_address`, `customer_status`, `created_at`, `updated_at`) VALUES
 (1, 'Bipul Karmokar', 'bipulkarmokar', 'bipul.bogra.bd@gmail.com', '01710647026', 'Bangladesh', 'Bogra', 'Shibganj', 'Active', '2020-09-02 07:40:33', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `download_history`
+--
+
+CREATE TABLE `download_history` (
+  `id` int(11) NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `user_type` varchar(255) NOT NULL DEFAULT 'Anonymous' COMMENT 'Anonymous / Registered',
+  `customer` int(11) DEFAULT NULL,
+  `file` int(11) NOT NULL,
+  `size` double(10,2) NOT NULL,
+  `size_unit` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `download_history`
+--
+
+INSERT INTO `download_history` (`id`, `ip`, `user_type`, `customer`, `file`, `size`, `size_unit`, `created_at`, `updated_at`) VALUES
+(1, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-10 21:54:56', NULL),
+(2, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-10 23:29:07', NULL),
+(3, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-10 23:29:26', NULL),
+(4, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-10 23:29:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,7 +132,7 @@ INSERT INTO `files` (`id`, `title`, `description`, `device_brand`, `device_model
 (11, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'zcxvccb', 'vxvxv', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 4.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', 1, '2020-09-07 14:52:01', NULL, NULL, NULL),
 (12, 'hgnfgb', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'xvxv', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxxkklkllkhk', '', 56.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', 2, '2020-09-07 15:07:09', '2020-09-08 23:38:06', NULL, NULL),
 (13, 'xdsxbxvx', '', 'fbgfbg', 'ccbbxb', 'fnfgbf', 'fgbf', 'xvxv', 'fbfgb', 'gnngnf', 'gfnfnfn', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-08 15:39:32', NULL, NULL, NULL),
-(14, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'fnfgbf', 'vxvxv', 'xvxv', 'xcvxcv', 'xc x ', 'xdvdxvdv', 'upload', '', 'Resume of MD Arman Hossain.pdf', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-08 15:43:27', NULL, NULL, NULL);
+(14, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'fnfgbf', 'vxvxv', 'xvxv', 'xcvxcv', 'xc x ', 'xdvdxvdv', 'upload', '', 'Resume-of-MD-Arman-Hossain.pdf', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-08 15:43:27', '2020-09-10 20:17:25', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -117,6 +145,29 @@ CREATE TABLE `file_tags` (
   `tag` varchar(255) NOT NULL,
   `file` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `file_visitors`
+--
+
+CREATE TABLE `file_visitors` (
+  `id` int(11) NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `file` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `file_visitors`
+--
+
+INSERT INTO `file_visitors` (`id`, `ip`, `file`, `created_at`, `updated_at`) VALUES
+(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-10 19:35:22'),
+(2, '::1', 2, '2020-09-10 15:02:30', '2020-09-10 11:57:02'),
+(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-10 19:29:36');
 
 -- --------------------------------------------------------
 
@@ -225,6 +276,14 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `download_history`
+--
+ALTER TABLE `download_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `file` (`file`),
+  ADD KEY `download_history_ibfk_1` (`customer`);
+
+--
 -- Indexes for table `files`
 --
 ALTER TABLE `files`
@@ -237,6 +296,13 @@ ALTER TABLE `files`
 -- Indexes for table `file_tags`
 --
 ALTER TABLE `file_tags`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `file` (`file`);
+
+--
+-- Indexes for table `file_visitors`
+--
+ALTER TABLE `file_visitors`
   ADD PRIMARY KEY (`id`),
   ADD KEY `file` (`file`);
 
@@ -273,6 +339,12 @@ ALTER TABLE `customers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `download_history`
+--
+ALTER TABLE `download_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
@@ -283,6 +355,12 @@ ALTER TABLE `files`
 --
 ALTER TABLE `file_tags`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `file_visitors`
+--
+ALTER TABLE `file_visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `folders`
@@ -307,6 +385,13 @@ ALTER TABLE `user_roles`
 --
 
 --
+-- Constraints for table `download_history`
+--
+ALTER TABLE `download_history`
+  ADD CONSTRAINT `download_history_ibfk_1` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `download_history_ibfk_2` FOREIGN KEY (`file`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Constraints for table `files`
 --
 ALTER TABLE `files`
@@ -319,6 +404,12 @@ ALTER TABLE `files`
 --
 ALTER TABLE `file_tags`
   ADD CONSTRAINT `file_tags_ibfk_1` FOREIGN KEY (`file`) REFERENCES `files` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `file_visitors`
+--
+ALTER TABLE `file_visitors`
+  ADD CONSTRAINT `file_visitors_ibfk_1` FOREIGN KEY (`file`) REFERENCES `files` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `folders`
