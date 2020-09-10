@@ -34,6 +34,18 @@
   <link href="<?=BASE_URL?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
   <!-- DATA TABLES -->
   <link href="<?=BASE_URL?>plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- Custom CSS -->
+  <link href="<?=BASE_URL?>dist/css/custom/files.css" rel="stylesheet" type="text/css" />
+  <link href="<?=BASE_URL?>dist/css/custom/drophy.css" rel="stylesheet" type="text/css" />
+  <!-- Toastr -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"
+    type="text/css" />
+  <!-- contextmenu -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+
+  <!-- Confirmation -->
+  <link href="<?=BASE_URL?>plugins/confirmation/jquery.confirmon.css" rel="stylesheet" type="text/css" />
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

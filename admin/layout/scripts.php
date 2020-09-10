@@ -38,6 +38,17 @@
 <!-- <script src="<?=BASE_URL?>dist/js/pages/dashboard.js" type="text/javascript"></script> -->
 <!-- AdminLTE for demo purposes -->
 <script src="<?=BASE_URL?>dist/js/demo.js" type="text/javascript"></script>
+<!-- Custom -->
+<!-- <script src="<?=BASE_URL?>dist/js/custom/files.js" type="text/javascript"></script> -->
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
+
+<!-- confirmation -->
+<script src="<?=BASE_URL?>plugins/confirmation/jquery.confirmon.js" type="text/javascript"></script>
+
+<!-- Context Menu -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
 
 <!-- page script -->
 <script type="text/javascript">

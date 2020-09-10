@@ -147,17 +147,12 @@
         cssAutoLoad: false,
 
         // Base URL to css/*, js/*
-        baseUrl: './',
+        baseUrl: '../elFinder/',
 
         // Connector URL
         url: '<?=BASE_URL?>elFinder/php/connector.minimal.php',
 
-        commands: [
-          'open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook',
-          'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy',
-          'cut', 'paste', 'edit', 'extract', 'archive', 'search', 'info', 'view', 'help', 'resize', 'sort',
-          'netmount'
-        ],
+        commands: ['home', 'up', 'back', 'forward', 'mkdir', 'upload', 'search'],
 
         // Callback when a file is double-clicked
         getFileCallback: function (file) {
@@ -189,7 +184,6 @@
             );
           }
         });
-
         // Optional for set document.title dynamically.
         var title = document.title;
         fm.bind('open', function () {

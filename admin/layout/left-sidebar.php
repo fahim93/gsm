@@ -62,10 +62,10 @@
         </a>
       </li>
       <li>
-        <a href="<?=FILES_URL?>">
+        <a href="<?=FILE_MANAGER_URL?>">
           <i class="fa fa-folder-open"></i>
           <span>
-            Files
+            File Manager
           </span>
         </a>
       </li>

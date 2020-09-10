@@ -1,5 +1,10 @@
 <?php include('layout/header.php'); ?>
 <?php include('layout/navbar.php'); ?>
+<?php include('conf/dbConfig.php'); ?>
+<?php include('functions/fileManager.php'); ?>
+<?php
+$folder_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
+?>
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 <div class="downloads-recent-header  row">
@@ -133,287 +138,86 @@
   <div class="downloads-folders pad-t-50 wow fadeInUp">
     <div class="container">
       <div class="downloads-folders-grid-holder">
-        <a href="folder/22.html">
+        <?php
+        $folder_list = get_objects($conn, $table_name='folders', $filter_set=array("is_active"=>"Yes", "parent"=>$folder_id));
+        if(isset($folder_list) && $folder_list->num_rows > 0){
+          foreach($folder_list as $folder){ ?>
+        <a href="<?=BASE_URL.'?fid='.$folder['id']?>">
           <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
             <div class="folder-home-item">
 
               <div class="image">
-                <a href="folder/22.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
+                <a href="<?=BASE_URL.'?fid='.$folder['id']?>">
+                  <img
+                    src="<?=(isset($folder['thumbnail']) && $folder['thumbnail'] != '') ? DEFAULT_FOLDER_ICON_PATH . $folder['thumbnail'] : DEFAULT_FOLDER_ICON_SRC ?>"
+                    class="img-responsive">
                 </a>
               </div>
               <div class="body">
                 <div class="title">
-                  <a href="folder/22.html">Box Setup/Program</a>
+                  <a href="<?=BASE_URL.'?fid='.$folder['id']?>"><?=$folder['title']?></a>
                 </div>
-                <p class="description">Official Box/Dongle Setup And Windows Program</p>
+                <p class="description"><?=$folder['description']?></p>
               </div>
             </div>
           </div>
         </a>
-        <a href="folder/24.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/24.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/24.html">Driver</a>
-                </div>
-                <p class="description">All GSM Related Driver</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/25.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/25.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/25.html">Tools</a>
-                </div>
-                <p class="description">All Official Tools</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/26.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/26.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/26.html">Firmware</a>
-                </div>
-                <p class="description">All Brand Firmware Hare</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/27.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/27.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/27.html">EMMC Dump</a>
-                </div>
-                <p class="description">Dead Boot File</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/28.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/28.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/28.html">Android Root</a>
-                </div>
-                <p class="description">All Root Kornel TWRP</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/29.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/29.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/29.html">FRP Solution</a>
-                </div>
-                <p class="description">FRP Remove File And Solution</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/30.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/30.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/30.html">SAMSUNG</a>
-                </div>
-                <p class="description">Files Combination Rom ETC</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/34.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/34.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/34.html">Firmware Various</a>
-                </div>
-                <p class="description">Others Mix Brand Rom</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/62.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/62.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/62.html">Xiaomi</a>
-                </div>
-                <p class="description">Mi Firmware And Mi Cloud Clean Files</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/196.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/196.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/196.html">Network Unlock</a>
-                </div>
-                <p class="description">Network Unlock Solution And File</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="folder/776.html">
-          <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-            <div class="folder-home-item">
-
-              <div class="image">
-                <a href="folder/776.html">
-                  <img src="uploads/system/fo1582381470.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="folder/776.html">Exclusive Solution</a>
-                </div>
-                <p class="description">Guide How To ...And Which Box...Successful Solution</p>
-              </div>
-            </div>
-          </div>
-        </a>
+        <?php }
+        }
+        ?>
       </div>
     </div>
   </div>
   <div class="downloads-files pad-t-50 wow fadeInUp">
     <div class="container">
       <div class="downloads-files-grid-holder">
-        <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-          <div class="file-grid-item">
-
-            <div class="content-top">
-              <div class="image">
-                <a href="download-file/1200.html">
-                  <div class="ribbon green"><span>4 USD</span></div>
-                  <img src="uploads/system/fi1582383446.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="download-file/1200.html">SAMSUNG FRP ON Instant +8801875134862 (Bulk Welcome)</a>
+        <?php
+        if(isset($folder_id) && $folder_id != ''){
+          $files_qry = "SELECT files.* FROM files, folders WHERE files.folder = folders.id AND files.is_active = 'Yes' AND folders.is_active = 'Yes'";
+        }else{
+          $files_qry = "SELECT * FROM files WHERE is_active = 'Yes' AND folder IS NULL";
+        }
+        if(isset($files_qry) && $files_qry != ''){
+          $file_list = get_custom_objects($conn, $files_qry);
+          if(isset($file_list) && $file_list->num_rows > 0){
+            foreach($file_list as $file){ ?>
+            <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
+              <div class="file-grid-item">
+    
+                <div class="content-top">
+                  <div class="image">
+                    <a href="<?=FILE_DETAILS_URL.$file['id']?>">
+                    <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
+                    <div class="ribbon green"><span><?=$file['price']?> <?=$file['price_unit']?></span></div>
+                    <?php } ?>
+                      <img src="<?=(isset($file['thumbnail']) && $file['thumbnail'] != '') ? DEFAULT_FILE_ICON_PATH . $file['thumbnail'] : DEFAULT_FILE_ICON_SRC ?>" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="body">
+                    <div class="title">
+                      <a href="<?=FILE_DETAILS_URL.$file['id']?>"><?=$file['title']?></a>
+                    </div>
+                  </div>
                 </div>
-                <p class="description"></p>
-              </div>
-            </div>
-            <div class="content-bottom">
-              <div class="content-controls">
-                <span class="file-date"> 07-Feb-2020</span>
-                <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date">40 MB</span>
-              </div>
-              <a class="btn btn-secondary content-btn" href="download-file/1200.html"><i
-                  class="fa fa-money fw-r5"></i>Buy</a>
-              <!--  <a class="btn btn-secondary content-btn" href="http://gsmtechmaster.com/cart?fid=1200"><i class="fa fa-shopping-cart fw-r5"></i>Buy</a> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-          <div class="file-grid-item">
-
-            <div class="content-top">
-              <div class="image">
-                <a href="download-file/1207.html">
-                  <div class="ribbon green"><span>15 USD</span></div>
-                  <img src="uploads/system/fi1582383446.png" class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="download-file/1207.html">Huawei P20 Pro CLT-AL00 (C00) Huawei id Remove By Downgrade Tested
-                    By (GSM Tech Master)</a>
+                <div class="content-bottom">
+                  <div class="content-controls">
+                    <span class="file-date"> <?=date('d M Y', strtotime($file['created_at']))?></span>
+                    <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date"><?=$file['file_size']?> <?=$file['file_size_unit']?></span>
+                  </div>
+                  <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
+                    <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
+                        class="fa fa-money fw-r5"></i>Buy</a>
+                    <?php }else{ ?>
+                      <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i class="fa fa-download fw-r5"></i>Download</a>
+                      <?php } ?>
                 </div>
-                <p class="description"></p>
               </div>
             </div>
-            <div class="content-bottom">
-              <div class="content-controls">
-                <span class="file-date"> 24-Feb-2020</span>
-                <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date">4 GB</span>
-              </div>
-              <a class="btn btn-secondary content-btn" href="download-file/1207.html"><i
-                  class="fa fa-money fw-r5"></i>Buy</a>
-              <!--  <a class="btn btn-secondary content-btn" href="http://gsmtechmaster.com/cart?fid=1207"><i class="fa fa-shopping-cart fw-r5"></i>Buy</a> -->
-            </div>
-          </div>
-        </div>
-
-
+            <?php
+            }
+          }
+        }
+        ?>
       </div>
     </div>
   </div>

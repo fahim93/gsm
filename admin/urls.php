@@ -3,7 +3,8 @@
     define('CLIENT_BASE_URL', 'http://localhost/gsm/');
 
     define('PRODUCTS_URL', BASE_URL.'pages/products.php');
-    define('FILES_URL', BASE_URL.'pages/files.php');
+    // define('FILES_URL', BASE_URL.'pages/files.php');
+    define('FILE_MANAGER_URL', BASE_URL.'pages/file-manager.php');
     define('PRESTOCK_URL', BASE_URL.'pages/prestock.php');
     define('PAGES_URL', BASE_URL.'pages/pages.php');
     define('ARTICLES_URL', BASE_URL.'pages/articles.php');
@@ -47,5 +48,9 @@
     define('OPT_INTERFACE_TEMPLATE_URL', BASE_URL.'pages/options/opt-interface-template.php');
     define('OPT_DOWNLOAD_URL', BASE_URL.'pages/options/opt-download.php');
     define('OPT_CRON_TASK_URL', BASE_URL.'pages/options/opt-cron-task.php');
+
+    //Defaults
+    define('DEFAULT_FOLDER_ICON_SRC', BASE_URL.'files/icons/folder-icon-default.png');
+    define('DEFAULT_FILE_ICON_SRC', BASE_URL.'files/icons/file-icon-default.png');
 
 ?>
