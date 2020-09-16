@@ -1,108 +1,39 @@
 <?php include('layout/header.php'); ?>
-<?php include('layout/navbar.php'); ?>
-<?php include('conf/dbConfig.php'); ?>
-<?php include('functions/fileManager.php'); ?>
-<?php include('functions/custom-functions.php'); ?>
+<?php include(ROOT_PATH.'layout/navbar.php'); ?>
+<?php include(ROOT_PATH.'functions/fileManager.php'); ?>
 <?php
 $folder_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
-$original_size = get_daily_downloaded_size_per_user($conn, $ip=getIPAddress(), $user_id=$user_id);
-$max_limit = 6 * 1024 * 1024 * 1024;
-$percentage_of_max_limit = ($original_size * 100) / $max_limit;
+
+$current_url = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$view = isset($_GET['view']) ? $_GET['view'] : '';
+$folder_list = get_objects($conn, $table_name='folders', $filter_set=array("is_active"=>"Yes", "parent"=>''));
+
+if(isset($_GET['order-by']) && $_GET['order-by'] !='' && isset($_GET['sort']) && $_GET['sort'] !=''){
+  $order_by = $_GET['order-by'];
+  $sort = $_GET['sort'];
+  if($order_by == 'downloads'){
+    $file_list = get_custom_objects($conn, "SELECT f.*, COUNT(dh.id) AS total_download FROM `files` AS f LEFT JOIN
+    `download_history` AS dh ON f.id = dh.file WHERE f.is_active = 'Yes' GROUP BY f.id ORDER BY total_download $sort");
+  }else if($order_by == 'visits'){
+    $file_list = get_custom_objects($conn, "SELECT f.*, COUNT(fv.id) AS total_visitors FROM `files` AS f LEFT JOIN
+    `file_visitors` AS fv ON f.id = fv.file WHERE f.is_active = 'Yes' GROUP BY f.id ORDER BY total_visitors $sort");
+
+  }else{
+    $file_list = get_objects($conn, $table_name='files', $filter_set=array('is_active'=>'Yes', 'folder'=>''), $order_by=$order_by, $sorted=$sort);
+  }
+}else{
+  $file_list = get_objects($conn, $table_name='files', $filter_set=array('is_active'=>'Yes', 'folder'=>''), $order_by='title', $sorted='ASC');
+}
 ?>
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-<div class="downloads-recent-header  row">
-  <div class="rf-mq-container mq-container container">
-    <div class="col-md-2 col-sm-3 col-xs-2 text-right">
-      <i class="fa fa-clock-o fw-r10"></i><span class="hidden-xs font-13 text-bold">Recent Files</span>
-    </div>
-    <div class="col-md-10 col-sm-9 col-xs-10">
-      <div class="marquee-set">
-        <div class="marquee-content">
-          <div class="mq-file-item inline">
-            <a href="download-file/1249.html">LAVA_Z51_1_16_V1.0_S132_20191211 Firmware (GSM Tech Master)</a>
-            <span class="item_date item_detail">[ 2020-03-07 15:41:07 ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/1248.html">LAVA_Z51_1_16_V1.0_S126_20190520_ENG_IN_195734_448 (GSM Tech Master)</a>
-            <span class="item_date item_detail">[ 2020-03-07 15:39:59 ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/1247.html">RMX1941EX_11_A.23_200108_8ccaffaa (GSM Tech Master)</a>
-            <span class="item_date item_detail">[ 2020-03-07 09:47:23 ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/1246.html">RMX1941EX_11_A.17_190919_f59604e3 (GSM Tech Master)</a>
-            <span class="item_date item_detail">[ 2020-03-07 08:45:37 ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/1245.html">sagit_images_V11.0.2.0.PCACNXM_20191019.0000.00_9.0_cn_9696da2279 (GSM
-              Tech Master)</a>
-            <span class="item_date item_detail">[ 2020-03-07 06:10:48 ]</span>
-          </div>
+<?php
+if(isset($top_and_recent_file_list) && $top_and_recent_file_list == 1){
+  include(ROOT_PATH.'components/recent-and-top-files.php');
+}
+?>
+<?php include(ROOT_PATH.'components/download-bar.php'); ?>
 
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="tf-mq-container mq-container container">
-    <div class="col-md-2 col-sm-3 col-xs-2 text-right">
-      <i class="fa fa-flash fw-r10"></i><span class="hidden-xs font-13 text-bold">Top Files</span>
-    </div>
-    <div class="col-md-10 col-sm-9 col-xs-10">
-      <div class="marquee-set">
-        <div class="marquee-content">
-
-          <div class="mq-file-item inline">
-            <a href="download-file/1017.html">JKM-L22&amp;JKM-LX2 9.1.0.220(C636) Downgrade Firmware For FRP Reset
-              Tested By (GSM Tech Master)</a>
-            <span class="item_downloads item_detail">[ 760 Downloads ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/82.html">ALL FRP APK BY GTM</a>
-            <span class="item_downloads item_detail">[ 679 Downloads ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/1054.html">Odin3_v3.13.1 Patched By (GSM Tech Master)</a>
-            <span class="item_downloads item_detail">[ 313 Downloads ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/824.html">Redmi 6&amp;6A Mi Account And Frp Tested By [GSM Tech Master]</a>
-            <span class="item_downloads item_detail">[ 285 Downloads ]</span>
-          </div>
-          <div class="mq-file-item inline">
-            <a href="download-file/143.html">Redmi 7 (onclite) BL Unlock And Mi Account Permanently Remove File
-              Patched By |GSM Tech Master|</a>
-            <span class="item_downloads item_detail">[ 209 Downloads ]</span>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="downloads-visitor-usage row">
-  <div class="container pad-t-10 pad-b-10">
-    <div class="col-md-2 col-sm-3 col-xs-2 text-right">
-      <i class="fa fa-download fw-r10"></i><span class="hidden-xs font-14 text-bold">Downloads</span>
-    </div>
-    <div class="col-md-8 col-sm-7 col-xs-10">
-      <div class="progress">
-        <div class="progress-bar" role="progressbar"
-          aria-valuenow="<?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>" aria-valuemin="0"
-          aria-valuemax="100" style="width:<?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>%">
-          <span class="sr-only"><?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>%</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2 col-sm-3 hidden-xs text-left">
-      <span class="font-14"><?=size_humanize($original_size)['SAU']?> / 6 GB</span>
-    </div>
-  </div>
-</div>
 <div class="wrapper">
   <div class="row downloads-search-home secondary-bg">
     <div class="container">
@@ -134,14 +65,14 @@ $percentage_of_max_limit = ($original_size * 100) / $max_limit;
     <div class="container pad-t-10 pad-b-10">
       <div class="col-md-12">
         <p class="alert bg-info text-center"><strong>If file need password so it's in description, if not so password
-            is: <span class="text-danger">www.gsmtechmaster.com</span></strong></p>
-
+            is: <span
+              class="text-danger"><?=(isset($default_password) && $default_password != '') ? $default_password : ''?></span></strong>
+        </p>
       </div>
 
     </div>
   </div>
   <?php
-  $folder_list = get_objects($conn, $table_name='folders', $filter_set=array("is_active"=>"Yes", "parent"=>''));
   if(isset($folder_list) && $folder_list->num_rows > 0){ ?>
   <div class="downloads-folders pad-t-50 wow fadeInUp">
     <div class="container">
@@ -175,206 +106,187 @@ $percentage_of_max_limit = ($original_size * 100) / $max_limit;
   <?php
   }
   ?>
+  <?php
+  if(isset($file_list) && $file_list->num_rows > 0){ ?>
   <div class="downloads-files pad-t-50 wow fadeInUp">
     <div class="container">
       <div class="downloads-files-grid-holder">
-        <?php
-        if(isset($folder_id) && $folder_id != ''){
-          $files_qry = "SELECT files.* FROM files, folders WHERE files.folder = folders.id AND files.is_active = 'Yes' AND folders.is_active = 'Yes'";
-        }else{
-          $files_qry = "SELECT * FROM files WHERE is_active = 'Yes' AND folder IS NULL";
-        }
-        if(isset($files_qry) && $files_qry != ''){
-          $file_list = get_custom_objects($conn, $files_qry);
-          if(isset($file_list) && $file_list->num_rows > 0){
-            foreach($file_list as $file){ ?>
-            <div class="col-md-3 col-sm-4 col-xs-12 no-margin">
-              <div class="file-grid-item">
-    
-                <div class="content-top">
-                  <div class="image">
-                    <a href="<?=FILE_DETAILS_URL.$file['id']?>">
-                    <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
-                    <div class="ribbon green"><span><?=$file['price']?> <?=$file['price_unit']?></span></div>
-                    <?php } ?>
-                      <img src="<?=(isset($file['thumbnail']) && $file['thumbnail'] != '') ? DEFAULT_FILE_ICON_PATH . $file['thumbnail'] : DEFAULT_FILE_ICON_SRC ?>" class="img-responsive">
-                    </a>
-                  </div>
-                  <div class="body">
-                    <div class="title">
-                      <a href="<?=FILE_DETAILS_URL.$file['id']?>"><?=$file['title']?></a>
-                    </div>
-                  </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="control-bar inline-width">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+              <form class="inline pad-b-30" method="get" action="">
+                <div class="le-select width-200">
+                  <select class="sort-by-select" name="order-by">
+                    <option value="title" selected>Title</option>
+                    <option value="price">Price</option>
+                    <option value="created_at">Date</option>
+                    <option value="downloads">Downloads</option>
+                    <option value="visits">Visits</option>
+                    <option value="is_featured">Featured</option>
+                  </select>
                 </div>
-                <div class="content-bottom">
-                  <div class="content-controls">
-                    <span class="file-date"> <?=date('d M Y', strtotime($file['created_at']))?></span>
-                    <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date"><?=$file['file_size']?> <?=$file['file_size_unit']?></span>
-                  </div>
+                <div class="le-select">
+                  <select class="sort-type-select hasCustomSelect" name="sort" data-placeholder="Sort Type">
+                    <option value="DESC">Descending</option>
+                    <option value="ASC" selected>Ascending</option>
+
+                  </select>
+                </div>
+                <button type="submit" class="btn-inline btn btn-sm btn-primary">Sort</button>
+              </form>
+            </div>
+            <?php
+            if(isset($view) && $view == 'list'){ ?>
+            <div class="col-md-1 col-sm-1 col-xs-12 pull-right">
+              <div class="grid-list-buttons pull-right">
+                <ul class="pull-right">
+                  <li class="grid-list-button-item active">
+                    <a href="<?=BASE_URL?>?view=grid">
+                      <i class="fa fa-th-large" style="color:#9436BD"></i> Grid
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <?php } else { ?>
+            <div class="col-md-3 col-sm-3 col-xs-12 pull-right">
+              <div class="grid-list-buttons pull-right">
+                <ul>
+                  <li class="grid-list-button-item active">
+                    <a href="<?=BASE_URL?>?view=list">
+                      <i class="fa fa-th-list" style="color:#9436BD"></i> List
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
+        <?php
+              foreach($file_list as $file){ 
+                if(isset($view) && $view == 'list'){ ?>
+        <div class="file-list-item">
+          <div class="image">
+            <a href="<?=FILE_DETAILS_URL.$file['id']?>">
+              <img
+                src="<?=(isset($file['thumbnail']) && $file['thumbnail'] != '') ? DEFAULT_FILE_ICON_PATH . $file['thumbnail'] : DEFAULT_FILE_ICON_SRC ?>"
+                class="img-responsive">
+            </a>
+          </div>
+          <div class="body">
+            <div class="title">
+              <a href="<?=FILE_DETAILS_URL.$file['id']?>"><?=$file['title']?></a>
+            </div>
+            <div class="file-labels">
+              <?php
+                if($file['is_featured'] == 'Yes'){ ?>
+              <span class="label label-info">Featured</span>
+              <?php  
+                }
+                if($file['is_paid'] == 'Yes'){ ?>
+              <span class="label label-warning">Paid</span>
+              <span class="label label-success"><?=$file['price']?> <?=$file['price_unit']?></span>
+              <?php
+                }else{ ?>
+              <span class="label label-success">Free</span>
+              <?php } ?>
+            </div>
+            <p class="description"></p>
+            <div class="content-controls">
+              <span class="file-folder text-bold"><a href="<?=BASE_URL?>" target="_blank">Root Folder</a></span>
+              <span class="seprator text-muted">&ensp;|&ensp;</span>
+              <span class="file-date">Date: <?=date('d M Y', strtotime($file['created_at']))?></span>
+              <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date">Size:
+                <?=$file['file_size']?>
+                <?=$file['file_size_unit']?></span>
+            </div>
+          </div>
+          <div class="content-buttons">
+            <?php
+              if($file['is_paid'] == 'Yes'){ ?>
+            <a class="btn btn-primary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
+                class="fa fa-shopping-cart fw-r5"></i>Buy</a>
+            <?php
+              }else{ ?>
+            <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
+                class="fa fa-download fw-r5"></i>Download</a>
+            <?php
+              } ?>
+          </div>
+        </div>
+        <?php
+                }
+                else{ ?>
+        <div class="col-md-3 col-sm-4 col-xs-12">
+          <div class="file-grid-item">
+
+            <div class="content-top">
+              <div class="image">
+                <a href="<?=FILE_DETAILS_URL.$file['id']?>">
                   <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
-                    <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
-                        class="fa fa-money fw-r5"></i>Buy</a>
-                    <?php }else{ ?>
-                      <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i class="fa fa-download fw-r5"></i>Download</a>
-                      <?php } ?>
+                  <div class="ribbon green"><span><?=$file['price']?> <?=$file['price_unit']?></span></div>
+                  <?php } ?>
+                  <img
+                    src="<?=(isset($file['thumbnail']) && $file['thumbnail'] != '') ? DEFAULT_FILE_ICON_PATH . $file['thumbnail'] : DEFAULT_FILE_ICON_SRC ?>"
+                    class="img-responsive">
+                </a>
+              </div>
+              <div class="body">
+                <div class="title">
+                  <a href="<?=FILE_DETAILS_URL.$file['id']?>"><?=$file['title']?></a>
                 </div>
               </div>
             </div>
-            <?php
-            }
-          }
-        }
-        ?>
-      </div>
-    </div>
-  </div>
+            <div class="content-bottom">
+              <div class="content-controls">
+                <span class="file-date"> <?=date('d M Y', strtotime($file['created_at']))?></span>
+                <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date"><?=$file['file_size']?>
+                  <?=$file['file_size_unit']?></span>
+              </div>
+              <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
+              <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
+                  class="fa fa-money fw-r5"></i>Buy</a>
+              <?php }else{ ?>
+              <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
+                  class="fa fa-download fw-r5"></i>Download</a>
+              <?php } ?>
+            </div>
+          </div>
+        </div>
 
-  <div id="top-brands" class="wow fadeInUp mar-t-60">
-    <div class="container">
-      <div class="carousel-holder">
-        <div class="title-nav">
-          <h1>Our Partners</h1>
-          <div class="nav-holder">
-            <a href="#prev" data-target="#owl-brands" class="slider-prev btn-prev fa fa-angle-left"></a>
-            <a href="#next" data-target="#owl-brands" class="slider-next btn-next fa fa-angle-right"></a>
-          </div>
-        </div>
-        <div id="owl-brands" class="owl-carousel brands-carousel">
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582615052.png" alt="vivo" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582384694.png" alt="Samsung" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582614787.png" alt="Del" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582615384.png" alt="oppo" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582615120.png" alt="xiaomi" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582615583.png" alt="htc" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582615474.png" alt="google" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582614876.png" alt="huawei" />
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="javascript:void(0)">
-              <img src="uploads/partner/1582615733.png" alt="tecno" />
-            </a>
-          </div>
-        </div>
+        <?php 
+      }
+              }
+          ?>
       </div>
     </div>
   </div>
+  <?php
+  }
+  ?>
+
+  <!-- Our Partner (start) -->
+  <?php
+  if(isset($our_partner) && $our_partner == 1){
+    include(ROOT_PATH.'components/our-partners.php');
+  }
+  ?>
+  <!-- Our Partner (end) -->
+
   <div class="pad-b-50">
     <div class="container">
       <div class="row no-margin widgets-row">
-        <div class="col-md-4 col-sm-4 col-xs-12 no-margin-left">
-          <div class="widget downloads-footer-widget footer-widget footer-widget">
-            <h2 class="widget-head"><i class="fa fa-flash fw-r10"></i>Top Files</h2>
-            <div class="body text-center">
-              <ul class="dfiles-footer-list">
-
-                <li>
-                  <a href="download-file/1017.html">JKM-L22&amp;JKM-LX2 9.1.0.220(C636) Downgrade Firmware For FRP
-                    Reset Tested By (GSM Tech Master)</a>
-
-                </li>
-                <li>
-                  <a href="download-file/82.html">ALL FRP APK BY GTM</a>
-
-                </li>
-                <li>
-                  <a href="download-file/1054.html">Odin3_v3.13.1 Patched By (GSM Tech Master)</a>
-
-                </li>
-                <li>
-                  <a href="download-file/824.html">Redmi 6&amp;6A Mi Account And Frp Tested By [GSM Tech Master]</a>
-
-                </li>
-                <li>
-                  <a href="download-file/143.html">Redmi 7 (onclite) BL Unlock And Mi Account Permanently Remove File
-                    Patched By |GSM Tech Master|</a>
-
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-4 col-xs-12 no-margin-left">
-          <div class="widget downloads-footer-widget footer-widget">
-            <h2 class="widget-head"><i class="fa fa-tags fw-r10"></i>Recent Files</h2>
-            <div class="body text-center">
-              <ul class="dfiles-footer-list">
-                <li>
-                  <a href="download-file/1249.html">LAVA_Z51_1_16_V1.0_S132_20191211 Firmware (GSM Tech Master)</a>
-
-                </li>
-                <li>
-                  <a href="download-file/1248.html">LAVA_Z51_1_16_V1.0_S126_20190520_ENG_IN_195734_448 (GSM Tech
-                    Master)</a>
-
-                </li>
-                <li>
-                  <a href="download-file/1247.html">RMX1941EX_11_A.23_200108_8ccaffaa (GSM Tech Master)</a>
-
-                </li>
-                <li>
-                  <a href="download-file/1246.html">RMX1941EX_11_A.17_190919_f59604e3 (GSM Tech Master)</a>
-
-                </li>
-                <li>
-                  <a href="download-file/1245.html">sagit_images_V11.0.2.0.PCACNXM_20191019.0000.00_9.0_cn_9696da2279
-                    (GSM Tech Master)</a>
-
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 col-sm-4 col-xs-12 no-margin-left">
-          <div class="widget announcements-footer-widget footer-widget">
-            <h2 class="widget-head"><i class="fa fa-file-text fw-r10"></i>Announcements</h2>
-            <div class="body">
-              <ul class="announcements-footer-list">
-                <li>
-                  <a
-                    href="announcement/how-to-work-our-website-system06b0.html?aid=eyJpdiI6IlZ0ZlA1Ym96ajNMeUk0czJyT0VvV1E9PSIsInZhbHVlIjoiUGIwd3RTQ2lyNGM3U2NLcllGbXJFQT09IiwibWFjIjoiZmJkN2Q3MGYxMGQyMDljMzg0ZmYzNDgzNjg3ZjZhNTk1YzQzOWQyNmU2ZmExOGVkODgyMDcyYWJmZDBhY2EyYyJ9">How
-                    To Work Our Website System</a>
-                </li>
-                <li>
-                  <a
-                    href="announcement/must-read-website-user7cb5.html?aid=eyJpdiI6IkNKRlMyNDJGXC90S1YrSFV1eXZpa0VBPT0iLCJ2YWx1ZSI6IktJTjY1OGNrU2xzNXp6ck5iS1FCc1E9PSIsIm1hYyI6IjBiMDI1YjdkYTMyMTcyMjU1OGE2ZTAyNDY3NTRhNDY1ZTc2YTZkNTBjMTQ3NWM1MGM5MmI5MGFjYmIxNjBjMTQifQ==">Must
-                    Read Website User</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <!-- Recent and Top File List (start) -->
+        <?php
+        if(isset($top_and_recent_file_list) && $top_and_recent_file_list == 1){
+          include(ROOT_PATH.'components/recent-and-top-file-list.php');
+        }
+        ?>
+        <!-- Recent and Top File List (end) -->
+        <!-- Announcement List (start) -->
+        <?php include(ROOT_PATH.'components/announcement-list.php'); ?>
+        <!-- Announcement List (end) -->
       </div>
     </div>
   </div>

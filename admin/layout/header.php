@@ -47,6 +47,11 @@
   <!-- Confirmation -->
   <link href="<?=BASE_URL?>plugins/confirmation/jquery.confirmon.css" rel="stylesheet" type="text/css" />
 
+  <!-- jquery ui -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+    integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
+    crossorigin="anonymous" />
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -55,23 +60,6 @@
     <![endif]-->
 
   <!-- Section CSS -->
-  <!-- jQuery UI (REQUIRED) -->
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/jquery/jquery-ui-1.12.0.css" type="text/css">
-
-  <!-- elfinder css -->
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/commands.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/common.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/contextmenu.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/cwd.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/dialog.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/fonts.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/navbar.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/places.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/quicklook.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/statusbar.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/theme.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/toast.css" type="text/css">
-  <link rel="stylesheet" href="<?=BASE_URL?>elFinder/css/toolbar.css" type="text/css">
 </head>
 
 <body class="skin-blue sidebar-mini">

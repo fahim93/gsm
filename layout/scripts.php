@@ -16,6 +16,9 @@
 <script src="<?=BASE_URL?>assets/js/jsoft-scripts.js"></script>
 <script src="<?=BASE_URL?>assets/js/jsoft-custom.js"></script>
 
+<!-- simple-list-grid -->
+<script src="<?=BASE_URL?>assets/js/simple-list-grid/simple-list-grid.js"></script>
+
 <!-- Toastr -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
 

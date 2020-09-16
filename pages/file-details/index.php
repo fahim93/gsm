@@ -1,7 +1,5 @@
 <?php include('../../layout/header.php'); ?>
-<?php include('../../conf/dbConfig.php'); ?>
-<?php include('../../functions/fileManager.php'); ?>
-<?php include('../../functions/custom-functions.php'); ?>
+<?php include(ROOT_PATH.'functions/fileManager.php'); ?>
 <?php
 $file_id = (isset($_GET['fid']) && $_GET['fid'] != '') ? $_GET['fid'] : '';
 if(isset($file_id) && $file_id != ''){
@@ -47,33 +45,12 @@ if(isset($file_id) && $file_id != ''){
 if(isset($id)){
   create_visitor($conn, $file_id=$id, $ip=getIPAddress());
 }
-$original_size = get_daily_downloaded_size_per_user($conn, $ip=getIPAddress(), $user_id=$user_id);
-$max_limit = 6 * 1024 * 1024 * 1024;
-$percentage_of_max_limit = ($original_size * 100) / $max_limit;
 ?>
 
-<?php include('../../layout/navbar.php'); ?>
+<?php include(ROOT_PATH.'layout/navbar.php'); ?>
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-<div class="downloads-visitor-usage row">
-  <div class="container pad-t-10 pad-b-10">
-    <div class="col-md-2 col-sm-3 col-xs-2 text-right">
-      <i class="fa fa-download fw-r10"></i><span class="hidden-xs font-14 text-bold">Downloads</span>
-    </div>
-    <div class="col-md-8 col-sm-7 col-xs-10">
-      <div class="progress">
-        <div class="progress-bar" role="progressbar"
-          aria-valuenow="<?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>" aria-valuemin="0"
-          aria-valuemax="100" style="width:<?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>%">
-          <span class="sr-only"><?=isset($percentage_of_max_limit) ? $percentage_of_max_limit : 0?>%</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2 col-sm-3 hidden-xs text-left">
-      <span class="font-14"><?=size_humanize($original_size)['SAU']?> / 6 GB</span>
-    </div>
-  </div>
-</div>
+<?php include(ROOT_PATH.'components/download-bar.php'); ?>
 <div class="animate-dropdown">
   <div id="breadcrumb-alt" class="mar5">
     <div class="container">
@@ -216,8 +193,8 @@ $percentage_of_max_limit = ($original_size * 100) / $max_limit;
     </div>
     <div class="file-download">
       <?php if(isset($is_paid) && $is_paid=='Yes'){ ?>
-      <a href="../cart0766.html?fid=1200" class="btn btn-lg btn-info btn-block btn-download"><i
-          class="fa fa-money fw-r10"></i>Buy</a>
+      <button name="buy_file" class="btn btn-lg btn-info btn-block btn-download"><i
+          class="fa fa-money fw-r10"></i>Buy</button>
       <?php }else{ ?>
       <button name="download_file" id="download_file" class="btn btn-lg btn-success btn-block btn-download"><i
           class="fa fa-download fw-r10"></i>Download</button>

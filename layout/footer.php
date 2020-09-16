@@ -4,27 +4,26 @@
               <div class="col-xs-12 col-md-4 ">
                   <div class="contact-info">
                       <div class="footer-logo text-center">
-                          <img src="<?=BASE_URL?>uploads/system/l1574162894.png" alt="GSM server Free Firmware" />
+                          <img src="<?=isset($site_logo) ? BASE_URL.$site_logo : ''?>" alt="GSM server Free Firmware" />
                       </div>
 
                       <p>
-                          Phone +8801875134862<br>WhatsApp +8801751986091 <br>Like Our Page For Latest Firmware And
-                          Solutions
+                          <?=isset($footer_contact) ? $footer_contact : ''?>
                       </p>
 
 
                       <div class="social-icons text-center">
                           <ul>
                               <li>
-                                  <a target="_blank" href="https://web.facebook.com/GSM-Tech-Master-559794727858656/"
+                                  <a target="_blank" href="<?=isset($facebook_url) ? $facebook_url : ''?>"
                                       class="fa fa-lg fa-facebook bg-light-blue"></a>
                               </li>
                               <li>
-                                  <a target="_blank" href="https://www.youtube.com/channel/UCa9n8C9KcNcB_oHFAvfIvLg"
+                                  <a target="_blank" href="<?=isset($youtube_url) ? $youtube_url : ''?>"
                                       class="fa fa-lg fa-youtube bg-red"></a>
                               </li>
                               <li>
-                                  <a target="_blank" href="https://twitter.com/gsmshanto"
+                                  <a target="_blank" href="<?=isset($twitter_url) ? $twitter_url : ''?>"
                                       class="fa fa-lg fa-twitter bg-aqua"></a>
                               </li>
                           </ul>
@@ -59,12 +58,8 @@
           <div class="container">
               <div class="col-md-6 col-sm-6 col-xs-12 no-margin">
                   <div class="copyright">
-                      <strong>Copyright © 2017 - 2020 <a href="<?=BASE_URL?>" target="_blank">GSM Tech Master </a> All
-                          Rights
-                          Reserved.</strong> <br>
-                      <strong>Powered By <a href="https://gsmserverspro.com/" target="_blank">Download Server (GSM
-                              Servers
-                              Pro)</a></strong>
+                      <?=isset($copyright) ? $copyright : ''?> <br>
+                      <?=isset($footer_text) ? $footer_text : ''?>
                   </div>
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12 no-margin">

@@ -3,15 +3,15 @@
           <div class="col-md-4 col-sm-4 no-margin hidden-xs">
               <ul class="mar-t-5">
                   <li>
-                      <a target="_blank" href="https://web.facebook.com/GSM-Tech-Master-559794727858656/"
+                      <a target="_blank" href="<?=isset($facebook_url) ? $facebook_url : ''?>"
                           class="fa fa-lg fa-facebook bg-white"></a>
                   </li>
                   <li>
-                      <a target="_blank" href="https://www.youtube.com/channel/UCa9n8C9KcNcB_oHFAvfIvLg"
+                      <a target="_blank" href="<?=isset($youtube_url) ? $youtube_url : ''?>"
                           class="fa fa-lg fa-youtube bg-white"></a>
                   </li>
                   <li>
-                      <a target="_blank" href="https://twitter.com/gsmshanto" class="fa fa-lg fa-twitter bg-white"></a>
+                      <a target="_blank" href="<?=isset($twitter_url) ? $twitter_url : ''?>" class="fa fa-lg fa-twitter bg-white"></a>
                   </li>
               </ul>
           </div>
@@ -50,15 +50,13 @@
           <div class="col-md-3 col-sm-6 col-xs-12 logo-holder">
               <div class="logo">
                   <a href="<?=BASE_URL?>">
-                      <img src="<?=BASE_URL?>uploads/system/l1574162894.png" alt="Download Server" />
+                      <img src="<?=isset($site_logo) ? $site_logo : ''?>" alt="Download Server" />
                   </a>
               </div>
           </div>
           <div class="col-md-6 hidden-sm hidden-xs top-search-holder no-margin">
               <div class="search-area-top">
-                  <p class="text-white">Contact Us / Whatsapp <i class="fa fa-phone fw-r10"></i> <strong>+8801875134862
-                          (Only
-                          SMS)</strong></p>
+                  <p class="text-white"><?=isset($header_contact) ? $header_contact : ''?></p>
               </div>
               <div class="search-area">
                   <form id="header_search_form" method="get" action="http://gsmtechmaster.com/search">
