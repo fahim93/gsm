@@ -13,10 +13,10 @@ if(isset($_GET['order-by']) && $_GET['order-by'] !='' && isset($_GET['sort']) &&
   $sort = $_GET['sort'];
   if($order_by == 'downloads'){
     $file_list = get_custom_objects($conn, "SELECT f.*, COUNT(dh.id) AS total_download FROM `files` AS f LEFT JOIN
-    `download_history` AS dh ON f.id = dh.file WHERE f.is_active = 'Yes' GROUP BY f.id ORDER BY total_download $sort");
+    `download_history` AS dh ON f.id = dh.file WHERE f.is_active = 'Yes' AND f.folder IS NULL GROUP BY f.id ORDER BY total_download $sort");
   }else if($order_by == 'visits'){
     $file_list = get_custom_objects($conn, "SELECT f.*, COUNT(fv.id) AS total_visitors FROM `files` AS f LEFT JOIN
-    `file_visitors` AS fv ON f.id = fv.file WHERE f.is_active = 'Yes' GROUP BY f.id ORDER BY total_visitors $sort");
+    `file_visitors` AS fv ON f.id = fv.file WHERE f.is_active = 'Yes' AND f.folder IS NULL GROUP BY f.id ORDER BY total_visitors $sort");
 
   }else{
     $file_list = get_objects($conn, $table_name='files', $filter_set=array('is_active'=>'Yes', 'folder'=>''), $order_by=$order_by, $sorted=$sort);
@@ -106,165 +106,8 @@ if(isset($top_and_recent_file_list) && $top_and_recent_file_list == 1){
   <?php
   }
   ?>
-  <?php
-  if(isset($file_list) && $file_list->num_rows > 0){ ?>
-  <div class="downloads-files pad-t-50 wow fadeInUp">
-    <div class="container">
-      <div class="downloads-files-grid-holder">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="control-bar inline-width">
-            <div class="col-md-8 col-sm-8 col-xs-12">
-              <form class="inline pad-b-30" method="get" action="">
-                <div class="le-select width-200">
-                  <select class="sort-by-select" name="order-by">
-                    <option value="title" selected>Title</option>
-                    <option value="price">Price</option>
-                    <option value="created_at">Date</option>
-                    <option value="downloads">Downloads</option>
-                    <option value="visits">Visits</option>
-                    <option value="is_featured">Featured</option>
-                  </select>
-                </div>
-                <div class="le-select">
-                  <select class="sort-type-select hasCustomSelect" name="sort" data-placeholder="Sort Type">
-                    <option value="DESC">Descending</option>
-                    <option value="ASC" selected>Ascending</option>
 
-                  </select>
-                </div>
-                <button type="submit" class="btn-inline btn btn-sm btn-primary">Sort</button>
-              </form>
-            </div>
-            <?php
-            if(isset($view) && $view == 'list'){ ?>
-            <div class="col-md-1 col-sm-1 col-xs-12 pull-right">
-              <div class="grid-list-buttons pull-right">
-                <ul class="pull-right">
-                  <li class="grid-list-button-item active">
-                    <a href="<?=BASE_URL?>?view=grid">
-                      <i class="fa fa-th-large" style="color:#9436BD"></i> Grid
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <?php } else { ?>
-            <div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-              <div class="grid-list-buttons pull-right">
-                <ul>
-                  <li class="grid-list-button-item active">
-                    <a href="<?=BASE_URL?>?view=list">
-                      <i class="fa fa-th-list" style="color:#9436BD"></i> List
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <?php } ?>
-          </div>
-        </div>
-        <?php
-              foreach($file_list as $file){ 
-                if(isset($view) && $view == 'list'){ ?>
-        <div class="file-list-item">
-          <div class="image">
-            <a href="<?=FILE_DETAILS_URL.$file['id']?>">
-              <img
-                src="<?=(isset($file['thumbnail']) && $file['thumbnail'] != '') ? DEFAULT_FILE_ICON_PATH . $file['thumbnail'] : DEFAULT_FILE_ICON_SRC ?>"
-                class="img-responsive">
-            </a>
-          </div>
-          <div class="body">
-            <div class="title">
-              <a href="<?=FILE_DETAILS_URL.$file['id']?>"><?=$file['title']?></a>
-            </div>
-            <div class="file-labels">
-              <?php
-                if($file['is_featured'] == 'Yes'){ ?>
-              <span class="label label-info">Featured</span>
-              <?php  
-                }
-                if($file['is_paid'] == 'Yes'){ ?>
-              <span class="label label-warning">Paid</span>
-              <span class="label label-success"><?=$file['price']?> <?=$file['price_unit']?></span>
-              <?php
-                }else{ ?>
-              <span class="label label-success">Free</span>
-              <?php } ?>
-            </div>
-            <p class="description"></p>
-            <div class="content-controls">
-              <span class="file-folder text-bold"><a href="<?=BASE_URL?>" target="_blank">Root Folder</a></span>
-              <span class="seprator text-muted">&ensp;|&ensp;</span>
-              <span class="file-date">Date: <?=date('d M Y', strtotime($file['created_at']))?></span>
-              <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date">Size:
-                <?=$file['file_size']?>
-                <?=$file['file_size_unit']?></span>
-            </div>
-          </div>
-          <div class="content-buttons">
-            <?php
-              if($file['is_paid'] == 'Yes'){ ?>
-            <a class="btn btn-primary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
-                class="fa fa-shopping-cart fw-r5"></i>Buy</a>
-            <?php
-              }else{ ?>
-            <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
-                class="fa fa-download fw-r5"></i>Download</a>
-            <?php
-              } ?>
-          </div>
-        </div>
-        <?php
-                }
-                else{ ?>
-        <div class="col-md-3 col-sm-4 col-xs-12">
-          <div class="file-grid-item">
-
-            <div class="content-top">
-              <div class="image">
-                <a href="<?=FILE_DETAILS_URL.$file['id']?>">
-                  <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
-                  <div class="ribbon green"><span><?=$file['price']?> <?=$file['price_unit']?></span></div>
-                  <?php } ?>
-                  <img
-                    src="<?=(isset($file['thumbnail']) && $file['thumbnail'] != '') ? DEFAULT_FILE_ICON_PATH . $file['thumbnail'] : DEFAULT_FILE_ICON_SRC ?>"
-                    class="img-responsive">
-                </a>
-              </div>
-              <div class="body">
-                <div class="title">
-                  <a href="<?=FILE_DETAILS_URL.$file['id']?>"><?=$file['title']?></a>
-                </div>
-              </div>
-            </div>
-            <div class="content-bottom">
-              <div class="content-controls">
-                <span class="file-date"> <?=date('d M Y', strtotime($file['created_at']))?></span>
-                <span class="seprator text-muted">&ensp;|&ensp;</span><span class="file-date"><?=$file['file_size']?>
-                  <?=$file['file_size_unit']?></span>
-              </div>
-              <?php if(isset($file['is_paid']) && $file['is_paid'] == 'Yes'){ ?>
-              <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
-                  class="fa fa-money fw-r5"></i>Buy</a>
-              <?php }else{ ?>
-              <a class="btn btn-secondary content-btn" href="<?=FILE_DETAILS_URL.$file['id']?>"><i
-                  class="fa fa-download fw-r5"></i>Download</a>
-              <?php } ?>
-            </div>
-          </div>
-        </div>
-
-        <?php 
-      }
-              }
-          ?>
-      </div>
-    </div>
-  </div>
-  <?php
-  }
-  ?>
+  <?php include(ROOT_PATH.'components/file-list.php');?>
 
   <!-- Our Partner (start) -->
   <?php
@@ -293,4 +136,85 @@ if(isset($top_and_recent_file_list) && $top_and_recent_file_list == 1){
 </div>
 <?php include('layout/footer.php'); ?>
 <?php include('layout/scripts.php'); ?>
+<script src="<?=BASE_URL?>js/file-list.js"></script>
+<script>
+  $(document).ready(function () {
+    const params = new URLSearchParams(window.location.search)
+    let folder_id = (params.has('fid') && params.get('fid') !== null) ? params.get('fid') : '';
+    console.log(folder_id);
+    let order_by = $('#order_by').val();
+    let sort = $('#sort').val();
+    let req_data = {
+      action: 'file-list',
+      folder_id: folder_id,
+      order_by: order_by,
+      sort: sort
+    };
+    $.ajax({
+        url: '<?=BASE_URL?>actions/file-list.php',
+        method: 'POST',
+        data: req_data,
+        dataType: 'json'
+      })
+      .done(function (data) {
+        let FOLDER_URL = "<?=FOLDER_URL?>";
+        let FILE_DETAILS_URL = "<?=FILE_DETAILS_URL?>";
+        let BASE_URL = "<?=BASE_URL?>";
+        let DEFAULT_THUMB_SRC = "<?=$default_file_thumbnail?>";
+        setFileList(data, FOLDER_URL, FILE_DETAILS_URL, BASE_URL, DEFAULT_THUMB_SRC);
+      })
+      .fail(function (data) {
+        toastr.error('', data, {
+          timeOut: 5000,
+        });
+      });
+    // console.log("fid: " + folder_id + "; order_by: " + order_by + "; sort: " + sort);
+  });
+</script>
+<script>
+  $('#btn-sort').click(function () {
+    const params = new URLSearchParams(window.location.search)
+    let folder_id = (params.has('fid') && params.get('fid') !== null) ? params.get('fid') : '';
+    let order_by = $('#order_by').val();
+    let sort = $('#sort').val();
+    let req_data = {
+      action: 'file-list',
+      folder_id: folder_id,
+      order_by: order_by,
+      sort: sort
+    };
+    $.ajax({
+        url: '<?=BASE_URL?>actions/file-list.php',
+        method: 'POST',
+        data: req_data,
+        dataType: 'json'
+      })
+      .done(function (data) {
+        let FOLDER_URL = "<?=FOLDER_URL?>";
+        let FILE_DETAILS_URL = "<?=FILE_DETAILS_URL?>";
+        let BASE_URL = "<?=BASE_URL?>";
+        let DEFAULT_THUMB_SRC = "<?=$default_file_thumbnail?>";
+        setFileList(data, FOLDER_URL, FILE_DETAILS_URL, BASE_URL, DEFAULT_THUMB_SRC);
+      })
+      .fail(function (data) {
+        toastr.error('', data, {
+          timeOut: 5000,
+        });
+      });
+  });
+</script>
+<script>
+  $('#grid_view').click(function () {
+    $("#list_view").removeClass("btn-primary");
+    $("#grid_view").addClass("btn-primary");
+    $("#file_container_list").addClass("hidden");
+    $("#file_container_grid").removeClass("hidden");
+  });
+  $('#list_view').click(function () {
+    $("#grid_view").removeClass("btn-primary");
+    $("#list_view").addClass("btn-primary");
+    $("#file_container_grid").addClass("hidden");
+    $("#file_container_list").removeClass("hidden");
+  });
+</script>
 <?php include('layout/foot-scripts.php'); ?>

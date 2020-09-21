@@ -3,7 +3,7 @@
           <div class="container no-padding">
               <div class="col-xs-12 col-md-4 ">
                   <div class="contact-info">
-                      <div class="footer-logo text-center">
+                      <div class="footer-logo">
                           <img src="<?=isset($site_logo) ? BASE_URL.$site_logo : ''?>" alt="GSM server Free Firmware" />
                       </div>
 

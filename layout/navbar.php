@@ -11,19 +11,30 @@
                           class="fa fa-lg fa-youtube bg-white"></a>
                   </li>
                   <li>
-                      <a target="_blank" href="<?=isset($twitter_url) ? $twitter_url : ''?>" class="fa fa-lg fa-twitter bg-white"></a>
+                      <a target="_blank" href="<?=isset($twitter_url) ? $twitter_url : ''?>"
+                          class="fa fa-lg fa-twitter bg-white"></a>
                   </li>
               </ul>
           </div>
           <div class="col-md-8 col-sm-8 col-xs-12 no-margin">
               <ul class="right">
-                  <li>
+                  <?php
+                  if(is_logged_in()){ ?>
+                  <li id="account">
+                      <a href="<?=ACCOUNT_URL?>"><i class="fa fa-user fw-r5"></i>Account</a>
+                  </li>
+                  <li id="logout">
+                      <a class="btn btn-link" id="logout_button"><i class="fa fa-lock fw-r5"></i>Logout</a>
+                  </li>
+                  <?php }else{ ?>
+                  <li id="login">
                       <a href="<?=LOGIN_URL?>"><i class="fa fa-lock fw-r5"></i>Login</a>
                   </li>
-                  <li>
+                  <li id="sign_up">
                       <a href="<?=SIGN_UP_URL?>"><i class="fa fa-book fw-r5"></i>Register</a>
                   </li>
-
+                  <?php }
+                  ?>
                   <li class="hidden-xs">
                       <form id="change_language_form" class="form-inline" method="get" action="#">
                           <input type="hidden" name="a" value="language">
@@ -50,7 +61,7 @@
           <div class="col-md-3 col-sm-6 col-xs-12 logo-holder">
               <div class="logo">
                   <a href="<?=BASE_URL?>">
-                      <img src="<?=isset($site_logo) ? $site_logo : ''?>" alt="Download Server" />
+                      <img src="<?=isset($site_logo) ? BASE_URL.$site_logo : ''?>" alt="Download Server" />
                   </a>
               </div>
           </div>

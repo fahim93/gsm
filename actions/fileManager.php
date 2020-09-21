@@ -1,5 +1,6 @@
 <?php
 include('../functions/fileManager.php');
+include('../functions/common.php');
 include('../conf/dbConfig.php');
 if(isset($_POST['action']) && $_POST['action'] == 'create-download-history'){
     $file_id = trim($_POST['file_id']); 

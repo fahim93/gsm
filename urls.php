@@ -1,24 +1,26 @@
 <?php
 // Authentication
-define('LOGIN_URL', BASE_URL.'pages/auth/login.php');
+define('LOGIN_URL', BASE_URL.'containers/auth/login/');
+define('FORGOT_PASSWORD_URL', BASE_URL.'containers/auth/forgot-password/');
 
 // Registration
-define('SIGN_UP_URL', BASE_URL.'pages/sign-up.php');
+define('SIGN_UP_URL', BASE_URL.'containers/registration/');
 
-// Pages
-define('RECENT_FILE_URL', BASE_URL.'pages/recent-files.php');
-define('PACKAGE_URL', BASE_URL.'pages/packages.php');
-define('REQUEST_FILE_URL', BASE_URL.'pages/request-file.php');
-define('BLOG_URL', BASE_URL.'pages/blog.php');
-define('ANNOUNCEMENT_URL', BASE_URL.'pages/announcements.php');
-define('CONTACT_US_URL', BASE_URL.'pages/contact-us.php');
+// Account
+define('ACCOUNT_URL', BASE_URL.'containers/account/');
 
-// Files
-define('FILE_DETAILS_URL', BASE_URL.'pages/file-details/?fid=');
+// containers
+define('RECENT_FILE_URL', BASE_URL.'containers/recent-files/');
+define('PACKAGE_URL', BASE_URL.'containers/packages/');
+define('REQUEST_FILE_URL', BASE_URL.'containers/request-file/');
+define('BLOG_URL', BASE_URL.'containers/blog/');
+define('ANNOUNCEMENT_URL', BASE_URL.'containers/announcements/');
+define('CONTACT_US_URL', BASE_URL.'containers/contact-us/');
+
+//Folders and Files
+define('FILE_DETAILS_URL', BASE_URL.'containers/folders-and-files/file-details/?fid=');
 define('FILE_PATH', BASE_URL.'admin/files/');
-
-// Folder
-define('FOLDER_URL', BASE_URL.'pages/folders/?fid=');
+define('FOLDER_URL', BASE_URL.'containers/folders-and-files/?fid=');
 
 
 

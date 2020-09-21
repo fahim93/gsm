@@ -1,5 +1,5 @@
 <?php
-$original_size = get_daily_downloaded_size_per_user($conn, $ip=getIPAddress(), $user_id=$user_id);
+$original_size = get_daily_downloaded_size_per_user($conn, $ip=getIPAddress(), $user_id=$customer_id);
 $max_limit = 6 * 1024 * 1024 * 1024;
 $percentage_of_max_limit = ($original_size * 100) / $max_limit;
 ?>

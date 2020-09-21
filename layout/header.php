@@ -1,12 +1,31 @@
 <?php define('BASE_URL', 'http://localhost/gsm/'); ?>
+<?php session_start(); ?>
 <?php define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/gsm/'); ?>
 <?php include(ROOT_PATH.'urls.php'); ?>
 <?php include(ROOT_PATH.'conf/dbConfig.php'); ?>
 <?php include(ROOT_PATH.'functions/common.php'); ?>
 <?php include(ROOT_PATH.'functions/custom-functions.php'); ?>
 <?php
-$user_type = 'Anonymous';
-$user_id = '';
+function is_logged_in(){
+    include(ROOT_PATH.'conf/dbConfig.php');
+    if(isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] == TRUE && isset($_SESSION['customer_id']) && $_SESSION['customer_id'] != '' && isset($_SESSION['token']) && $_SESSION['token'] != ''){
+        $customer_id = $_SESSION['customer_id'];
+        $token = $_SESSION['token'];
+        $qry = "SELECT * FROM customers WHERE id = $customer_id AND token = '$token'";
+        $rs = $conn->query($qry)->fetch_assoc();
+        if(!empty($rs)){
+            return TRUE;
+        }
+        return FALSE;
+    }
+}
+if(is_logged_in()){
+    $customer_id = $_SESSION['customer_id'];
+    $user_type = 'Registered';
+}else{
+    $customer_id = '';
+    $user_type = 'Anonymous';
+}
 ?>
 <?php
 $interface_setup = get_objects($conn, $table_name='interface_setup');
@@ -139,13 +158,19 @@ if(isset($system_setup) && $system_setup->num_rows==1){
 <link rel="stylesheet" href="<?=BASE_URL?>assets/css/animate.min.css">
 <link rel="stylesheet" href="<?=BASE_URL?>assets/css/font-awesome.min.css">
 
+<!-- Bootstrap-select  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+<!-- Bootstrap-select-country  -->
+<link rel="stylesheet" href="<?=BASE_URL?>plugins/bootstrap-select-country-4.2.0/css/bootstrap-select-country.min.css">
+
+    
+
 <!-- simple-list-grid -->
 <!-- <link rel="stylesheet" href="<?=BASE_URL?>assets/css/simple-list-grid/simple-list-grid.css"> -->
 
 <!-- Toastr -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-<script src="<?=BASE_URL?>assets/components/jquery/dist/jquery.min.js">
-</script>
+
 <style>
     #owl-main .owl-wrapper {
         margin-bottom: 0px !important;

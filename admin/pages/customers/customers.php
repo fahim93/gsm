@@ -36,7 +36,7 @@
                   <th>Username</th>
                   <th>Email</th>
                   <th>Phone Number</th>
-                  <th>Status</th>
+                  <th>Is Active</th>
                   <th>Join</th>
                   <th>Actions</th>
                 </tr>
@@ -48,13 +48,13 @@
                   ?>
                 <tr>
                   <td><?=$customer['id']?></td>
-                  <td><?=$customer['customer_full_name']?></td>
-                  <td><?=$customer['customer_username']?></td>
-                  <td><?=$customer['customer_email']?></td>
-                  <td><?=$customer['customer_phone']?></td>
+                  <td><?=$customer['name']?></td>
+                  <td><?=$customer['username']?></td>
+                  <td><?=$customer['email']?></td>
+                  <td><?=$customer['phone']?></td>
                   <td>
                     <label
-                      class="label <?=($customer['customer_status']=='Inactive')?'label-danger':'label-success'?>"><?=$customer['customer_status']?></label>
+                      class="label <?=($customer['is_active']=='No')?'label-danger':'label-success'?>"><?=$customer['is_active']?></label>
                   </td>
                   <td><?=$customer['created_at']?></td>
                   <td>
@@ -76,7 +76,7 @@
                   <th>Username</th>
                   <th>Email</th>
                   <th>Phone Number</th>
-                  <th>Status</th>
+                  <th>Is Active</th>
                   <th>Join</th>
                   <th>Actions</th>
                 </tr>
