@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2020 at 01:34 PM
+-- Generation Time: Sep 21, 2020 at 09:51 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -76,14 +76,18 @@ CREATE TABLE `contacts` (
 
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
-  `customer_full_name` varchar(255) NOT NULL,
-  `customer_username` varchar(255) NOT NULL,
-  `customer_email` varchar(255) NOT NULL,
-  `customer_phone` varchar(255) NOT NULL,
-  `customer_country` varchar(255) NOT NULL,
-  `customer_city` varchar(255) NOT NULL,
-  `customer_address` varchar(255) NOT NULL,
-  `customer_status` varchar(255) NOT NULL DEFAULT 'Active',
+  `name` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `zip_code` varchar(20) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `token` text DEFAULT NULL,
+  `is_active` varchar(20) NOT NULL DEFAULT 'Yes',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -92,8 +96,9 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `customer_full_name`, `customer_username`, `customer_email`, `customer_phone`, `customer_country`, `customer_city`, `customer_address`, `customer_status`, `created_at`, `updated_at`) VALUES
-(1, 'Bipul Karmokar', 'bipulkarmokar', 'bipul.bogra.bd@gmail.com', '01710647026', 'Bangladesh', 'Bogra', 'Shibganj', 'Active', '2020-09-02 07:40:33', NULL);
+INSERT INTO `customers` (`id`, `name`, `username`, `email`, `phone`, `country`, `city`, `address`, `zip_code`, `image`, `password`, `token`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Bipul Karmokar', 'bipulkarmokar', 'bipul.bogra.bd@gmail.com', '01710647026', 'Bangladesh', 'Bogra', 'Shibganj', NULL, NULL, '', NULL, 'Yes', '2020-09-02 07:40:33', '2020-09-21 19:47:58'),
+(2, 'Fahimul fahim', 'fahim', 'fahimulislam93@gmail.com', '01812733305', '19', 'Dhaka', '15/2/A', '1215', NULL, '$2y$10$WyzFI6g7GZ9dm6L9ah3e1.wNgYu6UkwTdP93NDi0QJHJlnUlhu5mm', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2MDA3MTcyMzEsIm5iZiI6MTYwMDcxNzIzMSwiZXhwIjoxNjAwODAzNjMxLCJhdWQiOiJteWN1c3RvbWVycyIsImRhdGEiOnsiaWQiOjIsIm5hbWUiOiJGYWhpbXVsIGZhaGltIiwiZW1haWwiOiJmYWhpbXVsaXNsYW05M0BnbWFpbC5jb20ifX0.JoXaXW8XJDszp16A6IL8S9fE5di8d9V_-IAGPVZMsVEkkZoSnh6XRkEblzZ95vnhaO1kfw5upskTJFlzrUgGBQ', 'Yes', '2020-09-21 09:44:50', '2020-09-21 19:40:31');
 
 -- --------------------------------------------------------
 
@@ -124,7 +129,9 @@ INSERT INTO `download_history` (`id`, `ip`, `user_type`, `customer`, `file`, `si
 (4, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-10 23:29:36', NULL),
 (5, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-10 23:42:16', NULL),
 (6, '::1', 'Anonymous', NULL, 13, 99999999.99, 'byte', '2020-09-10 23:46:35', NULL),
-(7, '::1', 'Anonymous', NULL, 13, 99999999.99, 'byte', '2020-09-10 23:47:07', NULL);
+(7, '::1', 'Anonymous', NULL, 13, 99999999.99, 'byte', '2020-09-10 23:47:07', NULL),
+(8, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-18 17:30:32', NULL),
+(9, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-18 18:19:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,15 +180,15 @@ INSERT INTO `files` (`id`, `title`, `description`, `device_brand`, `device_model
 (3, 'xdsxbxvx', '', 'bcbcfgcfb', 'ccbbxb', 'zcxvccb', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:14:44', NULL, NULL, NULL),
 (4, 'hgnfgb', '', 'bcbcfgcfb', 'ccbbxb', 'fnfgbf', 'fgbf', 'xvxv', 'xcvxcv', 'fbfgb', 'gfnfnfn', 'direct', 'sdvsdvs', '', 56.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:22:23', NULL, NULL, NULL),
 (5, 'hgnfgb', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'xvxv', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:29:57', NULL, NULL, NULL),
-(6, 'hgnfgb', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'xvxv', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-07 14:34:56', NULL, NULL, NULL),
-(7, 'hgnfgb', '', 'bcbcfgcfb', 'ccbbxb', 'fnfgbf', 'fgbf', 'fgnnfgb', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-07 14:37:04', NULL, NULL, NULL),
-(8, 'hfnssdfs', '', 'bcbcfgcfb', 'ccbbxb', 'fnfgbf', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'gfnfnfn', 'direct', 'sdcsxx', '', 2.01, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-07 14:38:37', NULL, NULL, NULL),
-(9, 'hgnfgb', '', 'bcbcfgcfb', 'ccbbxb', 'zcxvccb', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 0.01, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-07 14:47:04', NULL, NULL, NULL),
-(10, 'hfnssdfs', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'fgnnfgb', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 4.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-07 14:48:36', NULL, NULL, NULL),
-(11, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'zcxvccb', 'vxvxv', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 4.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', 1, '2020-09-07 14:52:01', NULL, NULL, NULL),
-(12, 'hgnfgb', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'xvxv', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'direct', 'https://doc-0c-84-docs.googleusercontent.com/docs/securesc/v9r8kvh1q711b2nh7a2imgl0avh369ab/eto16s835besbmlsp6hj1v4asjch49ia/1599781800000/09893641086843687000/04327092949152832579/1X54mWAfh-r-zMHDR2NV_eCIEjhdq0D7u?e=download&authuser=0&nonce=35gpbei4tfhq6&user=04327092949152832579&hash=f9vu8l04eoac8otjh6ipa3fioaaj0j4v', '', 56.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', 2, '2020-09-07 15:07:09', '2020-09-10 23:51:06', NULL, NULL),
-(13, 'xdsxbxvx', '', 'fbgfbg', 'ccbbxb', 'fnfgbf', 'fgbf', 'xvxv', 'fbfgb', 'gnngnf', 'gfnfnfn', 'upload', '', 'Inception.2010.1080p.BrRip.x264.YIFY.mp4', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-08 15:39:32', '2020-09-10 23:46:14', NULL, NULL),
-(14, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'fnfgbf', 'vxvxv', 'xvxv', 'xcvxcv', 'xc x ', 'xdvdxvdv', 'upload', '', 'Resume-of-MD-Arman-Hossain.pdf', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', '', '', NULL, '2020-09-08 15:43:27', '2020-09-10 20:17:25', NULL, NULL);
+(6, 'hgnfgb', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'xvxv', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:34:56', '2020-09-18 00:28:21', NULL, NULL),
+(7, 'hgnfgb', '', 'bcbcfgcfb', 'ccbbxb', 'fnfgbf', 'fgbf', 'fgnnfgb', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:37:04', '2020-09-18 00:28:28', NULL, NULL),
+(8, 'hfnssdfs', '', 'bcbcfgcfb', 'ccbbxb', 'fnfgbf', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'gfnfnfn', 'direct', 'sdcsxx', '', 2.01, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:38:37', '2020-09-18 00:28:38', NULL, NULL),
+(9, 'hgnfgb', '', 'bcbcfgcfb', 'ccbbxb', 'zcxvccb', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 0.01, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:47:04', '2020-09-18 00:28:45', NULL, NULL),
+(10, 'hfnssdfs', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'fgnnfgb', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 4.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:48:36', '2020-09-18 00:28:52', NULL, NULL),
+(11, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'zcxvccb', 'vxvxv', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'direct', 'sdcsxx', '', 4.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, 1, '2020-09-07 14:52:01', '2020-09-18 00:28:58', NULL, NULL),
+(12, 'hgnfgb', '', 'fbgfbg', 'fbfbf', 'zcxvccb', 'vxvxv', 'xvxv', 'fbfgb', 'gnngnf', 'xdvdxvdv', 'direct', 'https://doc-0c-84-docs.googleusercontent.com/docs/securesc/v9r8kvh1q711b2nh7a2imgl0avh369ab/eto16s835besbmlsp6hj1v4asjch49ia/1599781800000/09893641086843687000/04327092949152832579/1X54mWAfh-r-zMHDR2NV_eCIEjhdq0D7u?e=download&authuser=0&nonce=35gpbei4tfhq6&user=04327092949152832579&hash=f9vu8l04eoac8otjh6ipa3fioaaj0j4v', '', 56.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, 2, '2020-09-07 15:07:09', '2020-09-18 00:29:06', NULL, NULL),
+(13, 'xdsxbxvx', '', 'fbgfbg', 'ccbbxb', 'fnfgbf', 'fgbf', 'xvxv', 'fbfgb', 'gnngnf', 'gfnfnfn', 'upload', '', 'Inception.2010.1080p.BrRip.x264.YIFY.mp4', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-08 15:39:32', '2020-09-18 00:29:13', NULL, NULL),
+(14, 'hgnfgb', '', 'bcbcfgcfb', 'fbfbf', 'fnfgbf', 'vxvxv', 'xvxv', 'xcvxcv', 'xc x ', 'xdvdxvdv', 'upload', '', 'Resume-of-MD-Arman-Hossain.pdf', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-08 15:43:27', '2020-09-18 00:29:20', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -232,12 +239,13 @@ CREATE TABLE `file_visitors` (
 --
 
 INSERT INTO `file_visitors` (`id`, `ip`, `file`, `created_at`, `updated_at`) VALUES
-(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-10 19:35:22'),
-(2, '::1', 2, '2020-09-10 15:02:30', '2020-09-10 11:57:02'),
-(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-15 10:30:25'),
-(5, '::1', 13, '2020-09-10 23:46:22', '2020-09-10 19:48:12'),
+(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-18 12:19:17'),
+(2, '::1', 2, '2020-09-10 15:02:30', '2020-09-18 14:18:48'),
+(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-18 14:19:00'),
+(5, '::1', 13, '2020-09-10 23:46:22', '2020-09-18 13:30:03'),
 (6, '::1', 12, '2020-09-10 23:51:29', '2020-09-10 19:51:55'),
-(7, '::1', 7, '2020-09-14 11:23:54', NULL);
+(7, '::1', 7, '2020-09-14 11:23:54', NULL),
+(8, '::1', 8, '2020-09-18 17:26:20', '2020-09-18 13:26:38');
 
 -- --------------------------------------------------------
 
@@ -613,13 +621,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `download_history`
 --
 ALTER TABLE `download_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -643,7 +651,7 @@ ALTER TABLE `file_tags`
 -- AUTO_INCREMENT for table `file_visitors`
 --
 ALTER TABLE `file_visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `folders`
