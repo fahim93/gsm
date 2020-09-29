@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2020 at 09:51 PM
+-- Generation Time: Sep 30, 2020 at 12:15 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -88,6 +88,8 @@ CREATE TABLE `customers` (
   `password` varchar(255) DEFAULT NULL,
   `token` text DEFAULT NULL,
   `is_active` varchar(20) NOT NULL DEFAULT 'Yes',
+  `ip` varchar(255) DEFAULT NULL,
+  `login_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -96,9 +98,62 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `name`, `username`, `email`, `phone`, `country`, `city`, `address`, `zip_code`, `image`, `password`, `token`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'Bipul Karmokar', 'bipulkarmokar', 'bipul.bogra.bd@gmail.com', '01710647026', 'Bangladesh', 'Bogra', 'Shibganj', NULL, NULL, '', NULL, 'Yes', '2020-09-02 07:40:33', '2020-09-21 19:47:58'),
-(2, 'Fahimul fahim', 'fahim', 'fahimulislam93@gmail.com', '01812733305', '19', 'Dhaka', '15/2/A', '1215', NULL, '$2y$10$WyzFI6g7GZ9dm6L9ah3e1.wNgYu6UkwTdP93NDi0QJHJlnUlhu5mm', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2MDA3MTcyMzEsIm5iZiI6MTYwMDcxNzIzMSwiZXhwIjoxNjAwODAzNjMxLCJhdWQiOiJteWN1c3RvbWVycyIsImRhdGEiOnsiaWQiOjIsIm5hbWUiOiJGYWhpbXVsIGZhaGltIiwiZW1haWwiOiJmYWhpbXVsaXNsYW05M0BnbWFpbC5jb20ifX0.JoXaXW8XJDszp16A6IL8S9fE5di8d9V_-IAGPVZMsVEkkZoSnh6XRkEblzZ95vnhaO1kfw5upskTJFlzrUgGBQ', 'Yes', '2020-09-21 09:44:50', '2020-09-21 19:40:31');
+INSERT INTO `customers` (`id`, `name`, `username`, `email`, `phone`, `country`, `city`, `address`, `zip_code`, `image`, `password`, `token`, `is_active`, `ip`, `login_at`, `created_at`, `updated_at`) VALUES
+(1, 'Bipul Karmokar', 'bipulkarmokar', 'bipul.bogra.bd@gmail.com', '01710647026', 'Bangladesh', 'Bogra', 'Shibganj', NULL, NULL, '', NULL, 'Yes', '', NULL, '2020-09-02 07:40:33', '2020-09-21 19:47:58'),
+(2, 'Fahimul Islam', 'fahim', 'fahimulislam93@gmail.com', '01812733305', 'BD', 'Dhaka', '15/2/A', '1215', 'uploads/customers/16251620_1217232858397023_933375537393403556_o.jpg', '$2y$10$el8oH1jyV/Bzj31cH9Bjj.rdrKRgz7ZTwFfbSTaMngC45gLB9pIuy', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2MDExMjg0MTksIm5iZiI6MTYwMTEyODQxOSwiZXhwIjoxNjAxMjE0ODE5LCJhdWQiOiJteWN1c3RvbWVycyIsImRhdGEiOnsiaWQiOjIsIm5hbWUiOiJGYWhpbXVsIElzbGFtIiwiZW1haWwiOiJmYWhpbXVsaXNsYW05M0BnbWFpbC5jb20ifX0.llxBnBRsBumRaoCt07Ji8cnzyp3D96Kl7I99fEF35n7t-cJqtDlpQeoaj4QUFHkUT_Dk5VPlqwwY72te_YwQ_Q', 'Yes', '::1', '2020-09-26 09:53:39', '2020-09-21 09:44:50', '2020-09-26 13:53:39'),
+(8, 'M.I. sujon', 'sujon', 'sujon@gmail.com', '01812345678', '19', 'Dhaka', '15/2/A', '1215', NULL, '$2y$10$LoCgkISF6HPqDunpOZsnnefV6b47NIDhVW9Poo.FjdsE0ipIf0AHO', NULL, 'Yes', NULL, NULL, '2020-09-26 11:17:25', NULL),
+(12, 'Sakib sakib', 'sakib', 'sakib@gmail.com', '01812345678', '19', 'Dhaka', '15/2/A', '1215', NULL, '$2y$10$loP8V5NMrsF2Og8iqL033eESkVfIcjhwj8M.mFnmIduDrSNWBi3Ky', NULL, 'Yes', NULL, NULL, '2020-09-26 12:36:05', NULL),
+(13, 'Mamun', 'mamun', 'mamun@gmail.com', '01812733305', 'BD', 'Dhaka', '15/2/A', '1215', NULL, '$2y$10$bTNstJWAXv4sJ6Pjw3YfPuWmqFoToUNFn3TwvnS0hCavhT3BmOUC.', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2MDEyMDg1ODUsIm5iZiI6MTYwMTIwODU4NSwiZXhwIjoxNjAxMjk0OTg1LCJhdWQiOiJteWN1c3RvbWVycyIsImRhdGEiOnsiaWQiOjEzLCJuYW1lIjoiTWFtdW4iLCJlbWFpbCI6Im1hbXVuQGdtYWlsLmNvbSJ9fQ.xkfgB4ApjSFHEOpW7b2w6Ra2_HQqBku2VNl7pLUZG9ac-NivKmtsozNvTcLPi_7p3spN2OcxchmcFLN14T_zBw', 'Yes', '::1', '2020-09-27 08:09:46', '2020-09-27 12:08:48', '2020-09-27 12:09:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers_accounts`
+--
+
+CREATE TABLE `customers_accounts` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `customer` int(11) NOT NULL,
+  `total_business` float(15,2) DEFAULT 0.00,
+  `total_topup` float(15,2) DEFAULT 0.00,
+  `current_balance` float(15,2) DEFAULT 0.00,
+  `status` int(1) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `customers_accounts`
+--
+
+INSERT INTO `customers_accounts` (`id`, `customer`, `total_business`, `total_topup`, `current_balance`, `status`, `created_at`, `updated_at`) VALUES
+(1, 13, 55.00, 100.00, 45.00, 1, '2020-09-27 12:08:48', '2020-09-29 21:10:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_packages`
+--
+
+CREATE TABLE `customer_packages` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `customer` int(11) DEFAULT NULL,
+  `package` int(11) DEFAULT NULL,
+  `expire_on` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_packages`
+--
+
+INSERT INTO `customer_packages` (`id`, `customer`, `package`, `expire_on`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, '2020-11-26 02:36:05', 1, '2020-09-26 12:36:05', '2020-09-26 16:22:42'),
+(2, 12, 1, '2020-11-26 02:36:05', 1, '2020-09-26 12:36:05', '2020-09-26 13:12:47'),
+(3, 2, 2, '2020-11-26 02:36:05', 0, '2020-09-26 12:36:05', '2020-09-26 16:22:42'),
+(4, 13, 1, '2020-11-27 02:08:48', 1, '2020-09-27 12:08:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -239,13 +294,14 @@ CREATE TABLE `file_visitors` (
 --
 
 INSERT INTO `file_visitors` (`id`, `ip`, `file`, `created_at`, `updated_at`) VALUES
-(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-18 12:19:17'),
+(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-29 14:39:19'),
 (2, '::1', 2, '2020-09-10 15:02:30', '2020-09-18 14:18:48'),
-(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-18 14:19:00'),
+(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-28 12:08:14'),
 (5, '::1', 13, '2020-09-10 23:46:22', '2020-09-18 13:30:03'),
 (6, '::1', 12, '2020-09-10 23:51:29', '2020-09-10 19:51:55'),
 (7, '::1', 7, '2020-09-14 11:23:54', NULL),
-(8, '::1', 8, '2020-09-18 17:26:20', '2020-09-18 13:26:38');
+(8, '::1', 8, '2020-09-18 17:26:20', '2020-09-28 12:07:27'),
+(9, '::1', 6, '2020-09-22 10:52:41', '2020-09-22 06:57:36');
 
 -- --------------------------------------------------------
 
@@ -342,6 +398,146 @@ INSERT INTO `interface_setup` (`id`, `language`, `skin`, `default_password`, `sh
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `id` int(11) NOT NULL,
+  `order_no` bigint(20) NOT NULL,
+  `item_type` varchar(20) NOT NULL COMMENT 'File / Package',
+  `file_id` int(11) DEFAULT NULL,
+  `file_title` varchar(255) NOT NULL,
+  `package_id` int(11) DEFAULT NULL,
+  `package_title` varchar(255) DEFAULT NULL,
+  `price` float(10,2) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `discount` float(10,2) NOT NULL,
+  `sub_total` float(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `order_no` bigint(20) NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `sub_total` float(10,2) NOT NULL DEFAULT 0.00,
+  `discount` float(10,2) NOT NULL DEFAULT 0.00,
+  `tax` float(10,2) NOT NULL DEFAULT 0.00,
+  `bill_amount` float(10,2) NOT NULL DEFAULT 0.00,
+  `bill_unit` varchar(20) NOT NULL,
+  `notes` text NOT NULL,
+  `is_paid` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'paid = 1, unpaid = 0',
+  `status` varchar(20) NOT NULL DEFAULT 'Pending' COMMENT 'Pending / Completed',
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `order_no`, `order_by`, `sub_total`, `discount`, `tax`, `bill_amount`, `bill_unit`, `notes`, `is_paid`, `status`, `completed_at`, `created_at`, `updated_at`) VALUES
+(6, 1001, 13, 55.00, 0.00, 0.00, 55.00, 'USD', '', 1, 'Completed', NULL, '2020-09-29 18:39:28', '2020-09-29 21:10:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_files`
+--
+
+CREATE TABLE `orders_files` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `order_no` bigint(20) NOT NULL,
+  `file_id` int(11) DEFAULT NULL,
+  `file_title` varchar(255) NOT NULL,
+  `price` float(10,2) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `sub_total` float(10,2) NOT NULL,
+  `discount` float(10,2) NOT NULL,
+  `total` float(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders_files`
+--
+
+INSERT INTO `orders_files` (`id`, `order_id`, `order_no`, `file_id`, `file_title`, `price`, `quantity`, `sub_total`, `discount`, `total`) VALUES
+(7, 6, 1001, 1, 'test update', 55.00, 1, 55.00, 0.00, 55.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_packages`
+--
+
+CREATE TABLE `orders_packages` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `order_no` bigint(20) NOT NULL,
+  `package_id` int(11) DEFAULT NULL,
+  `package_title` varchar(255) DEFAULT NULL,
+  `price` float(10,2) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `sub_total` float(10,2) NOT NULL,
+  `discount` float(10,2) NOT NULL,
+  `total` float(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `packages`
+--
+
+CREATE TABLE `packages` (
+  `id` int(11) NOT NULL,
+  `title` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_paid` tinyint(1) NOT NULL DEFAULT 0,
+  `price` float(10,2) NOT NULL DEFAULT 0.00,
+  `price_unit` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `validity` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Non Expirable' COMMENT 'Expirable / Non Expirable',
+  `validity_period` int(8) NOT NULL,
+  `validity_period_unit` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `devices` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Unlimited' COMMENT 'Limited / Unlimited',
+  `device_amount` int(5) DEFAULT 0 COMMENT 'Allow device amount',
+  `is_public` int(1) DEFAULT 0,
+  `is_active` int(1) DEFAULT 0,
+  `bandwith_size` int(1) DEFAULT 1,
+  `bandwith_size_unit` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bandwith_size_in_bytes` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Featured / Non Featured',
+  `bandwith_limit_file` int(11) DEFAULT 0,
+  `daily_file_limit` int(5) DEFAULT 0,
+  `daily_download_size` int(11) DEFAULT 0,
+  `daily_download_size_unit` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Daily for package main condition',
+  `daily_download_size_in_bytes` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `free_file_limit` int(11) DEFAULT 0,
+  `free_file_size` int(11) DEFAULT 0,
+  `free_file_size_unit` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Free is daily condition',
+  `free_file_size_in_bytes` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `packages`
+--
+
+INSERT INTO `packages` (`id`, `title`, `description`, `is_paid`, `price`, `price_unit`, `validity`, `validity_period`, `validity_period_unit`, `devices`, `device_amount`, `is_public`, `is_active`, `bandwith_size`, `bandwith_size_unit`, `bandwith_size_in_bytes`, `file_type`, `bandwith_limit_file`, `daily_file_limit`, `daily_download_size`, `daily_download_size_unit`, `daily_download_size_in_bytes`, `free_file_limit`, `free_file_size`, `free_file_size_unit`, `free_file_size_in_bytes`, `created_at`, `updated_at`) VALUES
+(1, 'Free', 'Free Package for all registerd user', 0, 0.00, '', 'Expirable', 2, 'Month', 'Limited', 1000, 1, 1, 100, 'GB', '107374182400', 'Non-Featured', 1000, 15, 4, 'GB', '4294967296', 20, 10, 'GB', '10737418240', '2020-02-22 06:20:58', '2020-09-25 20:26:13'),
+(2, 'GTM Test', 'This Package For Test', 1, 5.00, 'USD', 'Expirable', 5, 'Day', 'Limited', 5, 1, 1, 5, 'GB', '5368709120', 'Featured', 5, 5, 5, 'GB', '5368709120', 5, 5, 'GB', '5368709120', '2020-02-23 23:14:59', '2020-09-25 20:25:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `partners`
 --
 
@@ -380,6 +576,42 @@ INSERT INTO `partners` (`id`, `image`, `name`, `is_active`, `created_at`, `updat
 (19, 'uploads/partner/1582615474.png', 'google', 1, '2020-02-25 01:24:34', '2020-02-25 01:24:34', 1, NULL),
 (20, 'uploads/partner/1582615583.png', 'htc', 1, '2020-02-25 01:26:23', '2020-02-25 01:26:23', 1, NULL),
 (21, 'uploads/partner/1582615733.png', 'tecno', 1, '2020-02-25 01:28:53', '2020-02-25 01:29:07', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_download_setup`
+--
+
+CREATE TABLE `system_download_setup` (
+  `id` int(10) NOT NULL,
+  `default_registration_package` int(11) DEFAULT NULL,
+  `link_expire_period` int(6) DEFAULT NULL,
+  `link_expire_period_unit` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `allow_visitior_download` int(1) DEFAULT 1,
+  `visitor_allow_feature` int(1) DEFAULT 0,
+  `visitor_download_size` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `visitor_download_size_unit` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `visitor_download_size_in_bytes` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `visitor_file_limit` int(5) DEFAULT NULL,
+  `allow_user_switch_package` int(1) DEFAULT 0,
+  `allow_onsite_file_upload` int(1) DEFAULT 0,
+  `max_upload_size` int(10) DEFAULT 0,
+  `max_upload_size_uniy` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `allow_additional_package_of_active_package` int(1) DEFAULT 0,
+  `allow_one_free_package` int(1) DEFAULT 1,
+  `file_owner_percentage` int(4) DEFAULT 0,
+  `is_active` int(4) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `system_download_setup`
+--
+
+INSERT INTO `system_download_setup` (`id`, `default_registration_package`, `link_expire_period`, `link_expire_period_unit`, `allow_visitior_download`, `visitor_allow_feature`, `visitor_download_size`, `visitor_download_size_unit`, `visitor_download_size_in_bytes`, `visitor_file_limit`, `allow_user_switch_package`, `allow_onsite_file_upload`, `max_upload_size`, `max_upload_size_uniy`, `allow_additional_package_of_active_package`, `allow_one_free_package`, `file_owner_percentage`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'Day', 1, 0, '6', 'GB', '6442450944', 6, 1, 1, 10, 'GB', 0, 1, 5, 1, NULL, '2020-09-25 19:00:05');
 
 -- --------------------------------------------------------
 
@@ -446,7 +678,33 @@ CREATE TABLE `system_setup` (
 --
 
 INSERT INTO `system_setup` (`id`, `site_title`, `site_url`, `site_logo`, `lazy_image`, `default_folder_icon`, `default_file_thumbnail`, `og_image`, `fav_icon`, `meta_tag`, `meta_description`, `support_email`, `contact_email`, `technical_email`, `billing_email`, `currency_code`, `currency_format`, `currency_decimal`, `maximum_pending_order`, `allow_registration`, `mail_verification`, `captcha_active`, `lazy_active`, `balance_order`, `balance_transfer`, `show_partner`, `show_recent_file`, `show_top_file`, `show_announcement`, `login_download`, `free_download_size`, `size_unit`, `size_in_bytes`, `file_limit`, `theme_color`, `theme_text`, `top_bar_color`, `menu_bar_color`, `header_color`, `news_part`, `folder_color`, `footer_color`, `footer_bar_color`, `show_map`, `map_url`, `is_email_verified`, `is_active`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 'GSM Tech Master', 'https://gsmtechmaster.com', 'uploads/system/l1574162894.png', 'uploads/system/la1574063228.png', 'uploads/system/fo1582381470.png', 'uploads/system/fi1582383446.png', 'uploads/system/o1574063228.jpg', 'uploads/system/fav1582381311.png', 'GSM Tech Master Soft,Samsung Firmware,Huawei Firmware,HTC Firmware,Samsung Combination,Clone Firmware Flash File,Symphony Customer Care Firmware,Walton Customer Care Firmware,Logo Fix Firmware, Dead Recovey Flash File,LCD Fix Firmware Flash File,Root File TWRP,Mi Cloud Clean Rom,Xiaomi Downgrade Firmware,MIUI 10 Firmware,Bootloader Unlock File,', 'Welcome To GSM Tech Master Official Download Server, Hare You Can Find Firmware Flash File,SAMSUNG Firmware,SAMSUNG Combination,Customer Care Firmware,All Root File,MTK Clone Firmware, Xiaomi Firmware,Huawei Firmware,Also All GTM Tested Firmware And Solution, FRP Remove File And Solution', 'gsmtechmaster@gmail.com', 'gsmtechmaster@gmail.com', 'gsmtechmaster@gmail.com', 'gsmtechmaster@gmail.com', 'USD', '$', '2', NULL, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.8815556794243!2d90.42242181429697!3d23.751602794648736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b9a0bd62e54b%3A0xa5f9fbd9fc4614aa!2sGSM%20Tech%20Master!5e0!3m2!1sbn!2sbd!4v1582547063128!5m2!1sbn!2sbd', 0, 1, NULL, '2020-02-27 04:12:14', NULL, NULL);
+(1, 'GSM Tech Master', 'https://gsmtechmaster.com', 'uploads/system/l1574162894.png', 'uploads/system/la1574063228.png', 'uploads/system/fo1582381470.png', 'uploads/system/fi1582383446.png', 'uploads/system/o1574063228.jpg', 'uploads/system/fav1582381311.png', 'GSM Tech Master Soft,Samsung Firmware,Huawei Firmware,HTC Firmware,Samsung Combination,Clone Firmware Flash File,Symphony Customer Care Firmware,Walton Customer Care Firmware,Logo Fix Firmware, Dead Recovey Flash File,LCD Fix Firmware Flash File,Root File TWRP,Mi Cloud Clean Rom,Xiaomi Downgrade Firmware,MIUI 10 Firmware,Bootloader Unlock File,', 'Welcome To GSM Tech Master Official Download Server, Hare You Can Find Firmware Flash File,SAMSUNG Firmware,SAMSUNG Combination,Customer Care Firmware,All Root File,MTK Clone Firmware, Xiaomi Firmware,Huawei Firmware,Also All GTM Tested Firmware And Solution, FRP Remove File And Solution', 'gsmtechmaster@gmail.com', 'gsmtechmaster@gmail.com', 'gsmtechmaster@gmail.com', 'gsmtechmaster@gmail.com', 'USD', '$', '2', NULL, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, NULL, NULL, '6442450944', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.8815556794243!2d90.42242181429697!3d23.751602794648736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b9a0bd62e54b%3A0xa5f9fbd9fc4614aa!2sGSM%20Tech%20Master!5e0!3m2!1sbn!2sbd!4v1582547063128!5m2!1sbn!2sbd', 0, 1, NULL, '2020-09-22 09:36:30', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `customer` int(11) DEFAULT NULL,
+  `admin_pay` int(1) DEFAULT 0,
+  `invoice` bigint(20) DEFAULT NULL,
+  `gateway` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gateway_identity` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` float(10,2) DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `customer`, `admin_pay`, `invoice`, `gateway`, `gateway_identity`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 13, 0, 1001, 'balance', '', 55.00, 1, '2020-09-29 21:10:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -521,6 +779,21 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `customers_accounts`
+--
+ALTER TABLE `customers_accounts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer` (`customer`);
+
+--
+-- Indexes for table `customer_packages`
+--
+ALTER TABLE `customer_packages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_package_ibfk_1` (`package`),
+  ADD KEY `customer` (`customer`);
+
+--
 -- Indexes for table `download_history`
 --
 ALTER TABLE `download_history`
@@ -574,6 +847,39 @@ ALTER TABLE `interface_setup`
   ADD KEY `updated_by` (`updated_by`);
 
 --
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_by` (`order_by`);
+
+--
+-- Indexes for table `orders_files`
+--
+ALTER TABLE `orders_files`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `orders_packages`
+--
+ALTER TABLE `orders_packages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `packages`
+--
+ALTER TABLE `packages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `partners`
 --
 ALTER TABLE `partners`
@@ -582,11 +888,24 @@ ALTER TABLE `partners`
   ADD KEY `updated_by` (`updated_by`);
 
 --
+-- Indexes for table `system_download_setup`
+--
+ALTER TABLE `system_download_setup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `system_setup`
 --
 ALTER TABLE `system_setup`
   ADD PRIMARY KEY (`id`),
   ADD KEY `updated_by` (`updated_by`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer` (`customer`);
 
 --
 -- Indexes for table `users`
@@ -621,7 +940,19 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `customers_accounts`
+--
+ALTER TABLE `customers_accounts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `customer_packages`
+--
+ALTER TABLE `customer_packages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `download_history`
@@ -651,7 +982,7 @@ ALTER TABLE `file_tags`
 -- AUTO_INCREMENT for table `file_visitors`
 --
 ALTER TABLE `file_visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `folders`
@@ -666,16 +997,58 @@ ALTER TABLE `interface_setup`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `orders_files`
+--
+ALTER TABLE `orders_files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `orders_packages`
+--
+ALTER TABLE `orders_packages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `partners`
 --
 ALTER TABLE `partners`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT for table `system_download_setup`
+--
+ALTER TABLE `system_download_setup`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `system_setup`
 --
 ALTER TABLE `system_setup`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -699,6 +1072,19 @@ ALTER TABLE `user_roles`
 ALTER TABLE `announcements`
   ADD CONSTRAINT `announcements_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `announcements_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `customers_accounts`
+--
+ALTER TABLE `customers_accounts`
+  ADD CONSTRAINT `customers_accounts_ibfk_1` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `customer_packages`
+--
+ALTER TABLE `customer_packages`
+  ADD CONSTRAINT `customer_packages_ibfk_1` FOREIGN KEY (`package`) REFERENCES `packages` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `customer_packages_ibfk_2` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `download_history`
@@ -742,6 +1128,24 @@ ALTER TABLE `interface_setup`
   ADD CONSTRAINT `interface_setup_ibfk_1` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`order_by`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `orders_files`
+--
+ALTER TABLE `orders_files`
+  ADD CONSTRAINT `orders_files_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `orders_packages`
+--
+ALTER TABLE `orders_packages`
+  ADD CONSTRAINT `orders_packages_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `partners`
 --
 ALTER TABLE `partners`
@@ -753,6 +1157,12 @@ ALTER TABLE `partners`
 --
 ALTER TABLE `system_setup`
   ADD CONSTRAINT `system_setup_ibfk_1` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`
