@@ -28,9 +28,13 @@
 <!-- Bootstrap SELECT -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"
   type="text/javascript"></script>
-
-<script src="<?=BASE_URL?>plugins/bootstrap-select-country-4.2.0/js/bootstrap-select-country.min.js"
+<!-- DataTable -->
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"
   type="text/javascript"></script>
+<!-- dropify -->
+<script src="<?=BASE_URL?>plugins/dropify/js/dropify.min.js" type="text/javascript"></script>
+<!-- Filterable-Country-Picker-niceCountryInput  -->
+<script src="<?=BASE_URL?>plugins/country-picker/niceCountryInput.js" type="text/javascript"></script>
 
 <!-- common js  -->
 <script src="<?=BASE_URL?>js/common.js"></script>
@@ -54,6 +58,7 @@
   });
 </script> -->
 
+<!-- Log Out  -->
 <script>
   $('#logout_button').click(function () {
     let customer_id = "<?=$customer_id?>";
@@ -90,6 +95,73 @@
   });
 </script>
 
+<!-- Remove From Cart  -->
+<script>
+  $('.remove_package_btn').click(function () {
+    let package_id = $(this).attr("data-package-id");
+    $.ajax({
+        url: '<?=BASE_URL?>api/cart.php',
+        method: 'POST',
+        data: {
+          "action": "remove",
+          "item_type": "package",
+          "package_id": package_id
+        },
+        dataType: 'JSON'
+      })
+      .done(function (data) {
+        if (data.status == 1) {
+          toastr.success('', data.message, {
+            timeOut: 2000,
+            onHidden: function () {
+              location.reload();
+            }
+          });
+        } else {
+          toastr.error('', data.message, {
+            timeOut: 5000,
+          });
+        }
+      })
+      .fail(function (data) {
+        toastr.error('', 'Some Problem Occured. Please Try Again.', {
+          timeOut: 5000,
+        });
+      });
+  });
+  $('.remove_file_btn').click(function () {
+    let package_id = $(this).attr("data-file-id");
+    $.ajax({
+        url: '<?=BASE_URL?>api/cart.php',
+        method: 'POST',
+        data: {
+          "action": "remove",
+          "item_type": "file",
+          "package_id": package_id
+        },
+        dataType: 'JSON'
+      })
+      .done(function (data) {
+        if (data.status == 1) {
+          toastr.success('', data.message, {
+            timeOut: 2000,
+            onHidden: function () {
+              location.reload();
+            }
+          });
+        } else {
+          toastr.error('', data.message, {
+            timeOut: 5000,
+          });
+        }
+      })
+      .fail(function (data) {
+        toastr.error('', 'Some Problem Occured. Please Try Again.', {
+          timeOut: 5000,
+        });
+      });
+  });
+</script>
 
 <script>
   $('[data-toggle="tooltip"]').tooltip();

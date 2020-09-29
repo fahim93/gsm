@@ -56,7 +56,7 @@ function create_download_history($conn, $file_id, $file_size, $file_size_unit, $
 
 function get_daily_downloaded_size_per_user($conn, $ip, $user_id){
     if($user_id != ''){
-        $qry = "SELECT SUM(size) AS total_size FROM download_history WHERE DATE(created_at) = CURDATE() AND customer = $user_id OR ip = '$ip'";
+        $qry = "SELECT SUM(size) AS total_size FROM download_history WHERE DATE(created_at) = CURDATE() AND customer = $user_id";
     }else{
         $qry = "SELECT SUM(size) AS total_size FROM download_history WHERE DATE(created_at) = CURDATE() AND ip = '$ip'";
     }

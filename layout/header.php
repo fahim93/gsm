@@ -27,6 +27,14 @@ if(is_logged_in()){
     $user_type = 'Anonymous';
 }
 ?>
+
+<!-- Include Classes -->
+<?php
+include(ROOT_PATH.'classes/Order.php');
+include(ROOT_PATH.'classes/OrderFile.php');
+include(ROOT_PATH.'classes/OrderPackage.php');
+?>
+
 <?php
 $interface_setup = get_objects($conn, $table_name='interface_setup');
 $system_setup = get_objects($conn, $table_name='system_setup');
@@ -106,7 +114,22 @@ if(isset($system_setup) && $system_setup->num_rows==1){
     $is_email_verified = $ss['is_email_verified'];
     $is_active = $ss['is_active'];
 }
+$default_user_image_src = BASE_URL.'uploads/system/user.png';
 ?>
+<?php
+if(isset($_SESSION['shopping_cart']) && (!empty($_SESSION['shopping_cart']['file']) || !empty($_SESSION['shopping_cart']['package']))){
+    $cart_item_count = 0;
+    $grand_sub_total = 0;
+    foreach($_SESSION['shopping_cart'] as $items){
+        foreach($items as $item){
+            $cart_item_count = $cart_item_count + 1;
+            $grand_sub_total = $grand_sub_total + $item['total'];
+        }
+    }
+    $discount = 0;
+    $tax = 0;
+    $grand_total = $grand_sub_total - $discount + $tax;
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -160,8 +183,12 @@ if(isset($system_setup) && $system_setup->num_rows==1){
 
 <!-- Bootstrap-select  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
-<!-- Bootstrap-select-country  -->
-<link rel="stylesheet" href="<?=BASE_URL?>plugins/bootstrap-select-country-4.2.0/css/bootstrap-select-country.min.css">
+<!-- DataTable  -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<!-- Filterable-Country-Picker-niceCountryInput  -->
+<link rel="stylesheet" href="<?=BASE_URL?>plugins/country-picker/niceCountryInput.css">
+<!-- dropify  -->
+<link rel="stylesheet" href="<?=BASE_URL?>plugins/dropify/css/dropify.min.css">
 
     
 

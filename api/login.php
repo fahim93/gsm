@@ -12,6 +12,7 @@ header("Content-type: application/json; charset=utf-8");
 // including files
 include_once("../conf/core.php");
 include_once("../conf/dbConfig.php");
+include_once("../functions/common.php");
 include_once("../classes/Customer.php");
 
 //objects
@@ -60,13 +61,19 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
               );
 
               $jwt = JWT::encode($payload_info, SECRET_KEY, 'HS512');
-              $customer_obj->update_token($id, $jwt);
+              $customer_obj->id = $id;
+              $customer_obj->token = $jwt;
+              $customer_obj->ip = getIPAddress();
+              $customer_obj->login_at = date("Y-m-d H:i:s");
+              $customer_obj->update_token();
+              $customer_obj->update_login_info();
               session_start();
               $_SESSION['is_logged_in'] = TRUE;
               $_SESSION['customer_id'] = $id;
               $_SESSION['customer_name'] = $name;
               $_SESSION['customer_email'] = $email;
               $_SESSION['token'] = $jwt;
+              
               http_response_code(200);
               echo json_encode(array(
                 "status" => 1,

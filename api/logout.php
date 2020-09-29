@@ -1,12 +1,15 @@
 <?php
 include_once("../conf/dbConfig.php");
 include_once("../classes/Customer.php");
-$customer_obj = new Customer($conn);
 
 if(isset($_POST['customer_id']) && $_POST['customer_id'] != ''){
+    $customer_obj = new Customer($conn);
+    
     $customer_id = $_POST['customer_id'];
     $jwt = '';
-    if($customer_obj->update_token($customer_id, $jwt)){
+    $customer_obj->id = $customer_id;
+    $customer_obj->token = $jwt;
+    if($customer_obj->update_token()){
 
         http_response_code(200);
         echo json_encode(array(

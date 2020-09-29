@@ -193,7 +193,7 @@ if(isset($id)){
     </div>
     <div class="file-download">
       <?php if(isset($is_paid) && $is_paid=='Yes'){ ?>
-      <button name="buy_file" class="btn btn-lg btn-info btn-block btn-download"><i
+      <button name="buy_file" id="buy_file_btn" class="btn btn-lg btn-info btn-block btn-download"><i
           class="fa fa-money fw-r10"></i>Buy</button>
       <?php }else{ ?>
       <button name="download_file" id="download_file" class="btn btn-lg btn-success btn-block btn-download"><i
@@ -296,6 +296,39 @@ if(isset($id)){
     var s = Math.round((size / Math.pow(1024, ord)) * 100) / 100;
     return s + ' ' + units[ord];
   }
+</script>
+<script>
+  $('#buy_file_btn').click(function () {
+    $.ajax({
+        url: '<?=BASE_URL?>api/cart.php',
+        method: 'POST',
+        data: {
+          "action": "add",
+          "item_type": "file",
+          "file_id": "<?=$file_id?>"
+        },
+        dataType: 'JSON'
+      })
+      .done(function (data) {
+        if (data.status == 1) {
+          toastr.success('', data.message, {
+            timeOut: 2000,
+            onHidden: function () {
+              location.reload();
+            }
+          });
+        } else {
+          toastr.error('', data.message, {
+            timeOut: 5000,
+          });
+        }
+      })
+      .fail(function (data) {
+        toastr.error('', 'Some Problem Occured. Please Try Again.', {
+          timeOut: 5000,
+        });
+      });
+  });
 </script>
 
 <?php include(ROOT_PATH.'layout/foot-scripts.php'); ?>

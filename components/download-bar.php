@@ -1,7 +1,7 @@
 <?php
 $original_size = get_daily_downloaded_size_per_user($conn, $ip=getIPAddress(), $user_id=$customer_id);
-$max_limit = 6 * 1024 * 1024 * 1024;
-$percentage_of_max_limit = ($original_size * 100) / $max_limit;
+$max_limit = size_humanize($size_in_bytes);
+$percentage_of_max_limit = ($original_size * 100) / $max_limit['SIZE'];
 ?>
 <div class="downloads-visitor-usage row">
   <div class="container pad-t-10 pad-b-10">
@@ -18,7 +18,7 @@ $percentage_of_max_limit = ($original_size * 100) / $max_limit;
       </div>
     </div>
     <div class="col-md-2 col-sm-3 hidden-xs text-left">
-      <span class="font-14"><?=size_humanize($original_size)['SAU']?> / 6 GB</span>
+      <span class="font-14"><?=size_humanize($original_size)['SAU']?> / <?=$max_limit['SAU']?></span>
     </div>
   </div>
 </div>

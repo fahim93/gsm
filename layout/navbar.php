@@ -96,31 +96,103 @@
                   </form>
               </div>
           </div>
-          <!-- cart start -->
+          <!-- cart start  -->
           <div class="col-md-3 col-sm-6 col-xs-12 top-cart-row no-margin">
               <div class="top-cart-row-container">
                   <div class="top-cart-holder dropdown animate-dropdown">
-
                       <div class="basket">
                           <a class="dropdown-toggle link-secondary" data-toggle="dropdown" href="#">
                               <div class="basket-item-count">
-                                  <span class="count">0</span>
-                                  <img src="<?=BASE_URL?>assets/images/icon-cart.png" alt="" />
+                                  <span class="count"><?=isset($cart_item_count) ? $cart_item_count : 0 ?></span>
+                                  <img src="<?=BASE_URL?>assets/images/icon-cart.png" alt="">
                               </div>
 
                               <div class="total-price-basket">
                                   <span class="lbl">Your Cart:</span>
                                   <span class="total-price">
-                                      0 USD
+                                      <?=isset($grand_total) ? number_format((float)$grand_total, 2, '.', '') : 0.00 ?>
+                                      USD
                                   </span>
                               </div>
                           </a>
+                          <?php
+                          if(is_logged_in()){
+                              $customer = $_SESSION['customer_id'];
+                              $order = new Order($conn);
+                              $order->order_by = $customer;
+                              $unpaid_orders = $order->get_customer_order_by_payment_status();
+                              if(count($unpaid_orders) > 0){ ?>
+                          <a class="btn btn-block btn-danger btn-sm mar-5" href="<?=ACC_INVOICES_URL?>">
+                              <b><?=count($unpaid_orders)?></b> Unpaid Invoices
+                          </a>
+                          <?php
+                          }
+                          }
+                          ?>
                           <ul class="dropdown-menu">
+                              <?php
+                              if(isset($_SESSION['shopping_cart']) && (!empty($_SESSION['shopping_cart']['file']) || !empty($_SESSION['shopping_cart']['package']))){
+                                if(!empty($_SESSION['shopping_cart']['package'])){
+                                    foreach($_SESSION['shopping_cart']['package'] as $item){ ?>
+                              <li>
+                                  <div class="basket-item">
+                                      <div class="row">
+                                          <div class="col-md-8 col-sm-8 col-xs-8 no-margin">
+                                              <div class="title"><?=$item['title']?></div>
+                                              <div class=""><small> <?=$item['quantity']?> Pieces </small>
+                                                  <span
+                                                      class="price"><?=number_format((float)$item['total'], 2, '.', '')?>
+                                                      <?=$item['price_unit']?></span></div>
+                                          </div>
+                                      </div>
+                                      <button data-package-id="<?=$item['package_id']?>"
+                                          class="btn close-btn remove_package_btn"></button>
+                                  </div>
+                              </li>
+                              <?php
+                                    }
+                                }
+                                if(!empty($_SESSION['shopping_cart']['file'])){
+                                    foreach($_SESSION['shopping_cart']['file'] as $item){ ?>
+                              <li>
+                                  <div class="basket-item">
+                                      <div class="row">
+                                          <div class="col-md-8 col-sm-8 col-xs-8 no-margin">
+                                              <div class="title"><?=$item['title']?></div>
+                                              <div class=""><small> <?=$item['quantity']?> Pieces </small>
+                                                  <span
+                                                      class="price"><?=number_format((float)$item['total'], 2, '.', '')?>
+                                                      <?=$item['price_unit']?></span></div>
+                                          </div>
+                                      </div>
+                                      <button data-file-id="<?=$item['file_id']?>"
+                                          class="btn close-btn remove_file_btn"></button>
+                                  </div>
+                              </li>
+                              <?php
+                                    }
+                                }
+                                ?>
+                              <li class="checkout">
+                                  <div class="basket-item">
+                                      <div class="row">
+                                          <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <a href="<?=CART_URL?>" class="le-button"><i
+                                                      class="fa fa-shopping-cart fw-r5"></i>Checkout</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </li>
+                              <?php
+                              }else{ ?>
                               <li class="checkout">
                                   <div class="basket-item">
                                       <p class="alert text-center text-black font-16">Shopping cart is empty !</p>
                                   </div>
                               </li>
+                              <?php
+                              }
+                              ?>
                           </ul>
                       </div>
                   </div>

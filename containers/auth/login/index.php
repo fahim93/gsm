@@ -124,7 +124,7 @@ if(is_logged_in()){
                     toastr.success('', data.message, {
                         timeOut: 2000,
                         onHidden: function () {
-                            location.reload();
+                            history.back();
                         }
                     });
                 } else {
