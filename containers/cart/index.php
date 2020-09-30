@@ -304,7 +304,7 @@ if(!isset($_SESSION['shopping_cart']) || empty($_SESSION['shopping_cart'])){
                 toastr.success('', data.message, {
                     timeOut: 2000,
                     onHidden: function(){
-                        location.reload();
+                        location.reolace("<?=ACC_INVOICES_URL?>");
                     }
                 });
             }else{

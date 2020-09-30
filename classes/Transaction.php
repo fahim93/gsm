@@ -25,7 +25,7 @@ class Transaction{
     public function create(){
         $query = "INSERT INTO {$this->table_name} SET customer = ?, invoice = ?, admin_pay = ?, gateway = ?, gateway_identity = ?, amount = ?, status = ?";
         $obj = $this->conn->prepare($query);
-        $obj->bind_param("iiissdi", $this->customer, $this->invoice, $this->admin_pay, $this->gateway, $this->gateway_identity, $this->amount, $this->status);
+        $obj->bind_param("iiissdi", $this->customer, $this->invoice, $this->admin_pay, $this->gateway, $this->gateway, $this->amount, $this->status);
         return $obj->execute();
     }
 
@@ -44,6 +44,17 @@ class Transaction{
         $query = "SELECT * FROM {$this->table_name} WHERE invoice = ?";
         $obj = $this->conn->prepare($query);
         $obj->bind_param("i", $this->invoice);
+        if($obj->execute()){
+            $data = $obj->get_result();
+            return $data->fetch_assoc();
+        }
+        return array();
+    }
+
+    public function get_details(){
+        $query = "SELECT * FROM {$this->table_name} WHERE id = ?";
+        $obj = $this->conn->prepare($query);
+        $obj->bind_param("i", $this->id);
         if($obj->execute()){
             $data = $obj->get_result();
             return $data->fetch_assoc();

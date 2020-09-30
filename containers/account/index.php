@@ -160,10 +160,10 @@ if(!empty($acc_data)){
                     </div>
                     <div class="panel-footer">
                         <button class="btn btn-block btn-primary" data-toggle="modal"
-                            data-target="#balance-recharge-modal"><i class="fa fa-repeat fw-r10"></i>Recharge
+                            data-target="#balance_recharge_modal"><i class="fa fa-repeat fw-r10"></i>Recharge
                             Balance</button>
                         <button class="btn btn-block btn-secondary" data-toggle="modal"
-                            data-target="#balance-transfer-modal"><i class="fa fa-exchange fw-r10"></i>Transfer
+                            data-target="#balance_transfer_modal"><i class="fa fa-exchange fw-r10"></i>Transfer
                             Balance</button>
 
                     </div>
@@ -173,7 +173,78 @@ if(!empty($acc_data)){
     </div>
 
 </div>
-
+<div id="balance_recharge_modal" class="modal fade modal-dialog-form in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header pad-10 bg-primary">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h5 class="modal-title"><i class="fa fa-repeat fw-r10"></i>Balance Recharge</h5>
+            </div>
+            <form class="form-horizontal" id="balance_recharge_form" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Amount</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input name="topup" type="number" class="form-control" placeholder="0.00" min="1" max="999"
+                                step="any" required="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-lg pull-left"><i
+                            class="fa fa-check fw-r10"></i>Confirm</button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal"><i
+                            class="fa fa-caret-down fw-r5"></i>Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="balance_transfer_modal" class="modal fade modal-dialog-form in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header pad-10 bg-secondary">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h5 class="modal-title"><i class="fa fa-exchange fw-r10"></i>Balance Transfer</h5>
+            </div>
+            <form class="form-horizontal" method="post" id="blance_transfer_form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label lable-required">Receiver Email</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input name="email" id="email" type="email" class="form-control" value=""
+                                onchange="validation(id)" onkeyup="validation(id)" placeholder="Receiver Email">
+                            <span id="email_error" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label lable-required">Amount</label>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <input name="amount" id="amount" type="number" class="form-control" placeholder="0.00"
+                                min="0.01" step="any" onchange="validation(id)" onkeyup="validation(id)" value="">
+                            <span id="amount_error" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">Notes</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input name="note" id="note" type="text" placeholder="Additional Notes" class="form-control"
+                                onchange="validation(id)" onkeyup="validation(id)" value="">
+                            <span id="note_error" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="op" value="do_transfer">
+                    <button type="button" id="blance_submit" class="btn btn-secondary btn-lg pull-left"><i
+                            class="fa fa-check fw-r10"></i>Confirm</button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal"><i
+                            class="fa fa-caret-down fw-r5"></i>Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <?php include(ROOT_PATH.'layout/footer.php'); ?>
 <?php include(ROOT_PATH.'layout/scripts.php'); ?>
 <script>

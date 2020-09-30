@@ -158,7 +158,37 @@ if(!is_logged_in()){
     </div>
 
 </div>
-
+<div id="payment_modal" class="modal fade modal-dialog-form in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pad-10 primary-bg">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h5 class="modal-title" id="payment_title">Transaction</h5>
+            </div>
+            <div class="ready-place" id="show_data">
+                <div class="modal-body form-horizontal pad-10">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2 id="payment_contact"></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <a href="" id="payment_invoice" class="btn btn-md btn-secondary btn-block"><i
+                                        class="fa fa-file-text fw-r10"></i>View Invoice</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer pad-5">
+                <button type="button" class="btn btn-block btn-info" data-dismiss="modal"><i
+                        class="fa fa-caret-right fw-r10"></i>Go Back</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php include(ROOT_PATH.'layout/footer.php'); ?>
 <?php include(ROOT_PATH.'layout/scripts.php'); ?>
 <script>
@@ -186,6 +216,20 @@ if(!is_logged_in()){
             return toastr.error("", "Please Select a payment method.", {
                 timeOut: 5000
             });
+        }
+        if (payment_method == 'bank') {
+            $("#payment_title").text("Bank Deposit");
+            $("#payment_contact").text("Contact Us / Whatsapp +8801875134862");
+            $("#payment_invoice").attr("href", "<?=ACC_INVOICE_DETAILS_URL?>" + order_id);
+            $('#payment_modal').modal();
+            return;
+        }
+        if (payment_method == 'cash') {
+            $("#payment_title").text("Cash on Delivery");
+            $("#payment_contact").text("Contact Us / Whatsapp +8801875134862");
+            $("#payment_invoice").attr("href", "<?=ACC_INVOICE_DETAILS_URL?>" + order_id);
+            $('#payment_modal').modal();
+            return;
         }
         if (payment_method == 'balance') {
             $.ajax({

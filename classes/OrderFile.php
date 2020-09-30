@@ -35,5 +35,27 @@ class OrderFile{
         }
         return array();
     }
+
+    public function get_by_customer($customer){
+        $query = "SELECT of.*, o.created_at FROM {$this->table_name} AS of, orders AS o WHERE of.order_id = o.id AND o.order_by = ? AND o.is_paid = 1";
+        $obj = $this->conn->prepare($query);
+        $obj->bind_param("i", $customer);
+        if($obj->execute()){
+            $data = $obj->get_result();
+            return $data->fetch_all(MYSQLI_ASSOC);
+        }
+        return array();
+    }
+
+    public function get_details(){
+        $query = "SELECT of.*, o.created_at, f.file_method, f.direct_url, f.file FROM {$this->table_name} AS of, orders AS o, files AS f WHERE of.order_id = o.id AND of.file_id = f.id  AND o.is_paid = 1 AND of.id = ?";
+        $obj = $this->conn->prepare($query);
+        $obj->bind_param("i", $this->id);
+        if($obj->execute()){
+            $data = $obj->get_result();
+            return $data->fetch_assoc();
+        }
+        return array();
+    }
 }
 ?>

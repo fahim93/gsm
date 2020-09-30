@@ -264,15 +264,12 @@ if(!is_logged_in()){
                                     <h3 class="panel-title">New Message</h3>
                                 </div>
                                 <div class="panel-heading">
-                                    <form class="form-inline" method="post"
-                                        action="https://gsmtechmaster.com/my-order-message">
-                                        <input type="hidden" name="_token"
-                                            value="HQGhUbB2DsjKfjPOyR3LH2E4RA0Us9JTDt7JAeIn">
+                                    <form id="message_form" class="form-inline" method="post">
                                         <div class="input-group">
                                             <input name="message" class="form-control"
-                                                placeholder="Type your message..." pattern=".{1,500}" required="">
+                                                placeholder="Type your message..." pattern=".{1,500}">
                                             <div class="input-group-btn">
-                                                <input type="hidden" name="orderId" value="1054">
+                                                <input type="hidden" name="order_id" value="<?=$order_id?>">
                                                 <button type="submit" class="btn btn-success"><i
                                                         class="fa fa-plus"></i></button>
                                             </div>
@@ -298,10 +295,18 @@ if(!is_logged_in()){
                                                     </thead>
 
                                                     <tbody>
-                                                        <tr class="odd">
-                                                            <td colspan="2" class="dataTables_empty" valign="top">No
-                                                                data available in table</td>
+                                                        <?php
+                                                        $data = json_decode(file_get_contents(BASE_URL."api/order-message.php?order_id=".$order_id), true);
+                                                        if(!empty($data)){
+                                                            foreach($data as $m){
+                                                                ?>
+                                                        <tr>
+                                                            <td><?=$m['message']?></td>
                                                         </tr>
+                                                        <?php
+                                                            }
+                                                        }
+                                                        ?>
                                                     </tbody>
                                                     <tfoot></tfoot>
                                                 </table>
@@ -438,6 +443,40 @@ if(!is_logged_in()){
                     timeOut: 5000
                 });
             });
+    });
+</script>
+<script>
+    $('#message_form').submit(function (e) {
+        e.preventDefault();
+        let form_data = new FormData(this);
+        if (form_data.get('message') == null || form_data.get('message') == '') {
+            return toastr.error('', "Type a message", {
+                timeOut: 5000
+            });
+        }
+        form_data.append("message_from", "Customer");
+        form_data.append("action", "send-message");
+        $.ajax({
+            url: "<?=BASE_URL?>/api/order-message.php",
+            method: "POST",
+            data: form_data,
+            dataType: "JSON",
+            contentType: false,
+            processData: false
+        }).done(function (data) {
+            if (data.status == 1) {
+                toastr.success('', data.message, {
+                    timeOut: 2000,
+                    onHidden: function () {
+                        location.reload();
+                    }
+                });
+            } else {
+                toastr.success('', data.message, {
+                    timeOut: 5000
+                });
+            }
+        }).fail(function (data) {});
     });
 </script>
 

@@ -83,12 +83,9 @@ if(!is_logged_in()){
                     <table id="datatables" class="display table table-responsive">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Notes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,12 +93,9 @@ if(!is_logged_in()){
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Notes</th>
                             </tr>
                         </tfoot>
                     </table>

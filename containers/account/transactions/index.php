@@ -115,7 +115,8 @@ if(!is_logged_in()){
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-info btn-dt"><i
+                                        <a href="javascript:void(0)" data-id="<?=$t['id']?>"
+                                            class="btn btn-sm btn-info btn-dt transaction_details_view"><i
                                                 class="fa fa-eye fw-r5"></i>View</a>
                                     </div>
                                 </td>
@@ -142,12 +143,103 @@ if(!is_logged_in()){
     </div>
 
 </div>
+<div id="transaction_details_view_modal" class="modal fade modal-dialog-form in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pad-10 primary-bg">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h5 class="modal-title"><i class="fa fa-shopping-cart fw-r10"></i>Transaction</h5>
+            </div>
+            <div class="ready-place" id="show_data">
+                <div class="modal-body form-horizontal pad-10">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group form-group-view">
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Gateway</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <p id="transaction_details_view_gateway" class="font-14 text-bold break-word">
 
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-view">
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Amount</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <p id="transaction_details_view_amount" class="font-14 text-bold break-word">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Date</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <p id="transaction_details_view_date" class="font-14 text-bold break-word">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label class="col-md-3 col-sm-3 col-xs-6 control-label">Invoice</label>
+                            <div class="col-md-9 col-sm-9 col-xs-6">
+                                <p class="font-13">
+                                    <a id="transaction_details_view_invoice" href="javascript:void(0)"></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label class="col-md-3 col-sm-3 col-xs-6 control-label">Status</label>
+                            <div class="col-md-9 col-sm-9 col-xs-6">
+                                <p class="font-13">
+                                    <span id="transaction_details_view_status"
+                                        class="label label-success font-13"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer pad-5">
+                <button type="button" class="btn btn-block btn-info" data-dismiss="modal"><i
+                        class="fa fa-caret-down fw-r10"></i>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php include(ROOT_PATH.'layout/footer.php'); ?>
 <?php include(ROOT_PATH.'layout/scripts.php'); ?>
 <script>
     $(document).ready(function () {
         $('#datatables').DataTable();
+    });
+</script>
+<script>
+    $('.transaction_details_view').click(function () {
+        let id = $(this).attr("data-id");
+        $.ajax({
+            url: "<?=BASE_URL?>api/transaction.php",
+            method: "POST",
+            data: {
+                "id": id,
+                "action": "get-details"
+            },
+            dataType: "JSON"
+        }).done(function (data) {
+            if (data.status == 1) {
+                let d = data.data;
+                $("#transaction_details_view_gateway").text(d.gateway);
+                $("#transaction_details_view_gateway").css("text-transform", "capitalize");
+                $("#transaction_details_view_amount").text(d.amount.toFixed(2) + " USD");
+                $("#transaction_details_view_date").text(d.created_at);
+                $("#transaction_details_view_invoice").text("#" + d.invoice);
+                if (d.status == 1) {
+                    $("#transaction_details_view_status").text("Complete");
+                }
+                $('#transaction_details_view_modal').modal();
+            }
+        }).fail(function (data) {});
     });
 </script>
 <?php include(ROOT_PATH.'layout/foot-scripts.php'); ?>
