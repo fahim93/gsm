@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2020 at 12:15 AM
+-- Generation Time: Oct 01, 2020 at 12:06 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -186,7 +186,8 @@ INSERT INTO `download_history` (`id`, `ip`, `user_type`, `customer`, `file`, `si
 (6, '::1', 'Anonymous', NULL, 13, 99999999.99, 'byte', '2020-09-10 23:46:35', NULL),
 (7, '::1', 'Anonymous', NULL, 13, 99999999.99, 'byte', '2020-09-10 23:47:07', NULL),
 (8, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-18 17:30:32', NULL),
-(9, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-18 18:19:00', NULL);
+(9, '::1', 'Anonymous', NULL, 14, 208749.00, 'byte', '2020-09-18 18:19:00', NULL),
+(10, '::1', 'Registered', 13, 14, 208749.00, 'byte', '2020-09-30 20:57:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -230,7 +231,7 @@ CREATE TABLE `files` (
 --
 
 INSERT INTO `files` (`id`, `title`, `description`, `device_brand`, `device_model`, `android_version`, `firmware_version`, `chip_detail`, `country`, `language`, `support_tool`, `file_method`, `direct_url`, `file`, `file_size`, `file_size_unit`, `is_paid`, `price`, `price_unit`, `is_featured`, `is_active`, `thumbnail`, `image`, `folder`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 'test update', '', 'fbgfbg', 'fbfbf', 'fnfgbf', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'Yes', 55.00, 'USD', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 13:59:54', '2020-09-09 19:48:04', NULL, NULL),
+(1, 'test update', '', 'fbgfbg', 'fbfbf', 'fnfgbf', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', 'Resume-of-MD-Arman-Hossain.pdf', 0.00, 'Byte', 'Yes', 55.00, 'USD', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 13:59:54', '2020-09-30 19:25:16', NULL, NULL),
 (2, 'edited again', '', 'bcbcfgcfb', 'ccbbxb', 'zcxvccb', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:13:47', '2020-09-08 22:51:23', NULL, NULL),
 (3, 'xdsxbxvx', '', 'bcbcfgcfb', 'ccbbxb', 'zcxvccb', 'fgbf', 'fgnnfgb', 'xcvxcv', 'gnngnf', 'xdvdxvdv', 'upload', '', '', 0.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:14:44', NULL, NULL, NULL),
 (4, 'hgnfgb', '', 'bcbcfgcfb', 'ccbbxb', 'fnfgbf', 'fgbf', 'xvxv', 'xcvxcv', 'fbfgb', 'gfnfnfn', 'direct', 'sdvsdvs', '', 56.00, 'Byte', 'No', 0.00, '', 'No', 'Yes', NULL, NULL, NULL, '2020-09-07 14:22:23', NULL, NULL, NULL),
@@ -294,9 +295,9 @@ CREATE TABLE `file_visitors` (
 --
 
 INSERT INTO `file_visitors` (`id`, `ip`, `file`, `created_at`, `updated_at`) VALUES
-(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-29 14:39:19'),
+(1, '::1', 1, '2020-09-10 14:45:44', '2020-09-30 16:44:40'),
 (2, '::1', 2, '2020-09-10 15:02:30', '2020-09-18 14:18:48'),
-(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-28 12:08:14'),
+(4, '::1', 14, '2020-09-10 16:33:27', '2020-09-30 16:57:03'),
 (5, '::1', 13, '2020-09-10 23:46:22', '2020-09-18 13:30:03'),
 (6, '::1', 12, '2020-09-10 23:51:29', '2020-09-10 19:51:55'),
 (7, '::1', 7, '2020-09-14 11:23:54', NULL),
@@ -443,7 +444,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_no`, `order_by`, `sub_total`, `discount`, `tax`, `bill_amount`, `bill_unit`, `notes`, `is_paid`, `status`, `completed_at`, `created_at`, `updated_at`) VALUES
-(6, 1001, 13, 55.00, 0.00, 0.00, 55.00, 'USD', '', 1, 'Completed', NULL, '2020-09-29 18:39:28', '2020-09-29 21:10:27');
+(6, 1001, 13, 55.00, 0.00, 0.00, 55.00, 'USD', '', 1, 'Completed', NULL, '2020-09-29 18:39:28', '2020-09-29 21:10:27'),
+(7, 1002, 13, 55.00, 0.00, 0.00, 55.00, 'USD', '', 0, 'Pending', NULL, '2020-09-30 20:44:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -469,7 +471,30 @@ CREATE TABLE `orders_files` (
 --
 
 INSERT INTO `orders_files` (`id`, `order_id`, `order_no`, `file_id`, `file_title`, `price`, `quantity`, `sub_total`, `discount`, `total`) VALUES
-(7, 6, 1001, 1, 'test update', 55.00, 1, 55.00, 0.00, 55.00);
+(7, 6, 1001, 1, 'test update', 55.00, 1, 55.00, 0.00, 55.00),
+(8, 7, 1002, 1, 'test update', 55.00, 1, 55.00, 0.00, 55.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_messages`
+--
+
+CREATE TABLE `orders_messages` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `message_from` int(1) DEFAULT NULL COMMENT '1=customer;2=comany',
+  `message` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `orders_messages`
+--
+
+INSERT INTO `orders_messages` (`id`, `order_id`, `message_from`, `message`, `created_at`, `updated_at`) VALUES
+(1, 6, 1, 'Hello', '2020-09-30 21:45:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -704,7 +729,7 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `customer`, `admin_pay`, `invoice`, `gateway`, `gateway_identity`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 13, 0, 1001, 'balance', '', 55.00, 1, '2020-09-29 21:10:27', NULL);
+(1, 13, 0, 1001, 'balance', 'balance', 55.00, 1, '2020-09-29 21:10:27', '2020-09-30 16:55:04');
 
 -- --------------------------------------------------------
 
@@ -867,6 +892,13 @@ ALTER TABLE `orders_files`
   ADD KEY `order_id` (`order_id`);
 
 --
+-- Indexes for table `orders_messages`
+--
+ALTER TABLE `orders_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
 -- Indexes for table `orders_packages`
 --
 ALTER TABLE `orders_packages`
@@ -958,7 +990,7 @@ ALTER TABLE `customer_packages`
 -- AUTO_INCREMENT for table `download_history`
 --
 ALTER TABLE `download_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -1006,13 +1038,19 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders_files`
 --
 ALTER TABLE `orders_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `orders_messages`
+--
+ALTER TABLE `orders_messages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders_packages`
@@ -1138,6 +1176,12 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `orders_files`
   ADD CONSTRAINT `orders_files_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `orders_messages`
+--
+ALTER TABLE `orders_messages`
+  ADD CONSTRAINT `orders_messages_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders_packages`
